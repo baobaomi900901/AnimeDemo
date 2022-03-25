@@ -44,18 +44,37 @@
       }
 
       gsap.fromTo(
-        ".card",
+        "h2",
         {
+          y: 10,
           opacity: 0,
         },
         {
-          opacity: 1,
+          y: 0,
+          delay: 2,
           duration: 1,
+          opacity: 1,
+          ease: "power2.out",
           onComplete: () => {
-            anime();
+            cardStart();
           },
         }
       );
+      function cardStart() {
+        gsap.fromTo(
+          ".card",
+          {
+            opacity: 0,
+          },
+          {
+            opacity: 1,
+            duration: 1,
+            onComplete: () => {
+              anime();
+            },
+          }
+        );
+      }
 
       function anime() {
         gsap.to(".card", {
