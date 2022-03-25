@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 引入taiwindCSS 样式 -->
     <link rel="stylesheet" href="../../dist/output.css" />
+    <!-- 引入字体 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <title>random background</title>
+    <title>Random BG</title>
   </head>
   <body
     class="relative overflow-hidden flex justify-center items-center h-screen w-screen bg-dark-blue"
@@ -18,7 +19,7 @@
     <div
       class="container text-center absolute w-full h-full flex justify-center items-center"
     >
-      <h2 class="text-white text-6xl font-bold">
+      <h2 class="text-white text-6xl font-bold mb-10">
         <span class="text-xl font-thin uppercase tracking-widest"
           >random bg</span
         ><br />
@@ -28,21 +29,27 @@
 
     <script src="../../node_modules/gsap/dist/gsap.min.js"></script>
     <script>
+      // 获取容器
       const container = document.querySelector(".container");
 
-      for (let i = 0; i <= 200; i++) {
+      for (let i = 0; i <= 80; i++) {
+        // 创建卡片
         const cards = document.createElement("div");
+        // 为卡片添加类
         cards.classList.add(
           "card",
-          "w-24",
-          "h-40",
+          "w-28",
+          "h-44",
           "bg-dark-blue",
           "absolute",
           "-z-10"
         );
+        // 将卡片填充到容器中
         container.appendChild(cards);
       }
 
+      // 创建一个文字动画,
+      // gsap.fromTo('el',{state1},{state2}), 从一个状态, 到另一个状态
       gsap.fromTo(
         "h2",
         {
@@ -54,13 +61,15 @@
           delay: 2,
           duration: 1,
           opacity: 1,
-          ease: "power2.out",
+          ease: "power1.inOut",
           onComplete: () => {
+            // onComplete, 动画结束时执行
             cardStart();
           },
         }
       );
 
+      // 创建卡片动画, 从隐藏到透明
       function cardStart() {
         gsap.fromTo(
           ".card",
@@ -71,31 +80,43 @@
             opacity: 1,
             duration: 1,
             onComplete: () => {
+              // onComplete, 动画结束时执行
               anime();
             },
           }
         );
       }
 
+      // 创建卡片动画, 随机移动
       function anime() {
+        // gsap.to('el',{state1}), 到另一个状态
         gsap.to(".card", {
           boxShadow: "0 10px 20px 0 rgba(0, 0, 0, 0.15)",
-          x: () => {
-            return gsap.utils.random(-700, 700);
-          },
-          y: () => {
-            return gsap.utils.random(-700, 700);
-          },
-          duration: () => {
-            return gsap.utils.random(1.5, 3);
-          },
+          // x 代表水平移动
+          // gsap.utils.random(min,max), 随机函数
+          // window.innerWidth, 窗口宽度
+          x: () =>
+            gsap.utils.random(-window.innerWidth / 2, window.innerWidth / 2),
+          // y 代表垂直移动
+          // window.innerHeight, 窗口高度
+          y: () =>
+            gsap.utils.random(-window.innerHeight / 2, window.innerHeight / 2),
+          // scale, 随机大小
+          scale: () => gsap.utils.random(0.8, 2),
+          // duration, 随机时间
+          duration: () => gsap.utils.random(1.5, 3),
           onComplete: () => {
+            // onComplete, 动画结束时执行 继续执行
             anime();
           },
         });
       }
-
-      // anime();
     </script>
   </body>
 </html>
+
+<style>
+  body {
+    font-family: "Titillium Web";
+  }
+</style>
