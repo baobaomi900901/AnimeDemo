@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <title>random background</title>
+  </head>
+  <body
+    class="relative overflow-hidden flex justify-center items-center h-screen w-screen bg-dark-blue"
+  >
+    <div
+      class="container text-center absolute w-full h-full flex justify-center items-center"
+    >
+      <h2 class="text-white text-6xl font-bold">
+        <span class="text-xl font-thin uppercase tracking-widest"
+          >random bg</span
+        ><br />
+        GSAP
+      </h2>
+    </div>
+
+    <script src="../../node_modules/gsap/dist/gsap.min.js"></script>
+    <script>
+      const container = document.querySelector(".container");
+
+      for (let i = 0; i <= 200; i++) {
+        const cards = document.createElement("div");
+        cards.classList.add(
+          "card",
+          "w-24",
+          "h-40",
+          "bg-dark-blue",
+          "absolute",
+          "-z-10"
+        );
+        container.appendChild(cards);
+      }
+
+      gsap.fromTo(
+        ".card",
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+          duration: 1,
+          onComplete: () => {
+            anime();
+          },
+        }
+      );
+
+      function anime() {
+        gsap.to(".card", {
+          boxShadow: "0 10px 20px 0 rgba(0, 0, 0, 0.15)",
+          x: () => {
+            return gsap.utils.random(-700, 700);
+          },
+          y: () => {
+            return gsap.utils.random(-700, 700);
+          },
+          duration: () => {
+            return gsap.utils.random(1.5, 3);
+          },
+          onComplete: () => {
+            anime();
+          },
+        });
+      }
+
+      // anime();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+*,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-transform: capitalize;
+}
+
+:root {
+  --clr: #ff5500;
+  --clr-b: #202020;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--clr-b);
+}
+
+.navigation {
+  width: 400px;
+  height: 70px;
+  background: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.navigation ul {
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 0.5s;
+}
+
+.navigation ul li .icon {
+  position: relative;
+  display: block;
+  line-height: 75px;
+  font-size: 1.5em;
+  text-align: center;
+  transition: 0.5s;
+  color: var(--clr-b);
+}
+
+.navigation ul li.active .icon {
+  transform: translateY(-32px);
+}
+
+.navigation ul li .label {
+  position: absolute;
+  color: var(--clr-b);
+  font-size: 0.75em;
+  font-weight: 400;
+  transition: 0.5s;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.navigation ul li.active .label {
+  transform: translateY(12px);
+  opacity: 1;
+}
+
+.indicator {
+  position: absolute;
+  top: -50%;
+  width: 70px;
+  height: 70px;
+  background-color: var(--clr);
+  border-radius: 50%;
+  border: 6px solid var(--clr-b);
+  transition: 0.5s;
+}
+
+.indicator::before {
+  --size: 20px;
+  content: " ";
+  position: absolute;
+  background-color: #fff;
+  width: var(--size);
+  height: var(--size);
+  top: 50%;
+  left: -22.2px;
+  border-top-right-radius: 100%;
+  box-shadow: 0px -10px 0 0 var(--clr-b);
+}
+
+.indicator::after {
+  --size: 20px;
+  content: " ";
+  position: absolute;
+  background-color: #fff;
+  width: var(--size);
+  height: var(--size);
+  top: 50%;
+  right: -22.2px;
+  border-top-left-radius: 100%;
+  box-shadow: 0px -10px 0 0 var(--clr-b);
+}
+
+.navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(93px * 0));
+}
+
+.navigation ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(93px * 1));
+}
+
+.navigation ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(93px * 2));
+}
+.navigation ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(93px * 3));
+}

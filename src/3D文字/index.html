@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>3D 文字</title>
+  </head>
+  <body>
+    <div class="text" data-text="CSS 3D Isometric Text">
+      CSS 3D Isometric Text
+    </div>
+    <script>
+      let text = document.querySelector(".text");
+      let shadow = "";
+      let horizontal = -1; // 1 or -1
+      let vertical = 1; // 1 or -1
+      for (let i = 0; i < 30; i++) {
+        shadow +=
+          (shadow ? "," : "") +
+          i * horizontal +
+          "px " +
+          i * vertical +
+          "px 0 #e1e1e1"; //
+        console.log("shadow :>> ", shadow);
+      }
+      text.style.textShadow = shadow;
+    </script>
+  </body>
+</html>
