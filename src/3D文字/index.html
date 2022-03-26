@@ -4,27 +4,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
     <link rel="stylesheet" href="style.css" />
     <title>3D 文字</title>
   </head>
-  <body>
-    <div class="text" data-text="CSS 3D Isometric Text">
-      CSS 3D Isometric Text
+  <body
+    class="w-screen h-screen flex flex-col justify-center items-center text-center relative overflow-hidden"
+  >
+    <div class="text break-normal" data-text="CSS 3D Isometric Text">
+      CSS 3D
+      <br />
+      Isometric
+      <br />
+      Text
     </div>
+    <script src="../../node_modules/gsap/dist/gsap.min.js"></script>
     <script>
       let text = document.querySelector(".text");
       let shadow = "";
-      let horizontal = -1; // 1 or -1
-      let vertical = 1; // 1 or -1
+      let horizontal = -1; // 水平 1 or -1
+      let vertical = 1; // 垂直 1 or -1
+
+      // 创建阴影
       for (let i = 0; i < 30; i++) {
         shadow +=
           (shadow ? "," : "") +
           i * horizontal +
           "px " +
           i * vertical +
-          "px 0 #e1e1e1"; //
-        console.log("shadow :>> ", shadow);
+          "px 0 #e1e1e1";
       }
+
+      // 阴影赋值
       text.style.textShadow = shadow;
     </script>
   </body>
