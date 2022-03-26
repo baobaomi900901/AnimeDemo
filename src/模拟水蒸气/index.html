@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>模拟水蒸气</title>
+  </head>
+
+  <body
+    class="relative bg-gradient-to-t from-black to-gray-500 overflow-hidden"
+  >
+    <div
+      class="vapour w-screen h-screen flex justify-center items-center relative flex py-0 px-5"
+    >
+      <div class="absolute" style="font-size: 16rem; transform: translateY(5%)">
+        🛀🏻
+      </div>
+    </div>
+  </body>
+  <script>
+    let vapour = document.querySelector(".vapour");
+
+    // 蒸汽柱, 随机生成一个变量 i, 用于动画延迟间隔
+    let span = `<span style="--i: ${Math.round(Math.random() * 10)}"></span>`;
+
+    // 循环生成 10 个
+    for (let i = 0; i <= 10; i++) {
+      span += `<span style="--i: ${Math.round(Math.random() * 10)}"></span>`;
+    }
+
+    // 写入 自定义模板
+    vapour.innerHTML += span;
+  </script>
+  <style>
+    .vapour span {
+      position: relative;
+      bottom: 10px;
+      display: inline-block;
+      min-width: 0.5rem;
+      height: 7.5rem;
+      border-radius: 50%;
+      background: #fff;
+      margin: 0 0.25rem;
+      /* 模拟水蒸气扩散 */
+      filter: blur(12px);
+      /* 初始隐藏 */
+      opacity: 0;
+      /* 蒸汽动画 */
+      animation: vapour 5s linear infinite;
+      /* 延迟间隔 */
+      animation-delay: calc(var(--i) * 0.5s);
+    }
+
+    @keyframes vapour {
+      0% {
+        transform: translateY(0) scaleX(1);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-120px) scaleX(5);
+      }
+      90% {
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(-240px) scaleX(10);
+      }
+    }
+  </style>
+</html>
