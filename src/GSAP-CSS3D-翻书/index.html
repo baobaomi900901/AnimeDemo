@@ -5,9 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../dist/output.css" />
-    <title>GSAP,CSS翻书</title>
+    <title>GSAP-CSS3D-翻书</title>
   </head>
   <body class="bg-gray-900 w-screen h-screen flex justify-center items-center">
+    <div class="absolute bottom-10">
+      <button class="playBtn text-white bg-dark-blue px-4 py-2 rounded-md z-50">
+        PLAY
+      </button>
+      <button
+        class="reverseBtn text-white bg-dark-blue px-4 py-2 rounded-md z-50 ml-10"
+      >
+        REVERSE
+      </button>
+    </div>
     <div class="container">
       <div class="box"></div>
     </div>
@@ -26,8 +36,10 @@
 
     // 歧视交错角度
     let rotationY = -195;
-    gsap.to(".span", {
-      duration: 4,
+
+    // play
+    let anime = gsap.to(".span", {
+      duration: 2,
       transformOrigin: "0% 50%",
       rotationY: () => {
         // 元素交错, 每次+15
@@ -42,6 +54,41 @@
       ease: "power2.inOut",
       //   是否重复
       //   repeat: -1,
+      paused: true,
+    });
+
+    // reverse
+    let anime2 = gsap.fromTo(
+      ".container",
+      {
+        rotationX: -20,
+        rotationY: 0,
+        rotationZ: 0,
+      },
+      {
+        duration: 12,
+        transformOrigin: "50% 50%",
+        rotationX: 20,
+        rotationY: 10,
+        rotationZ: 10,
+        ease: "power2.inOut",
+        //   是否重复
+        //   repeat: -1,
+        paused: true,
+      }
+    );
+
+    let playBtn = document.querySelector(".playBtn");
+    playBtn.addEventListener("click", () => {
+      anime.play();
+      anime2.play();
+    });
+
+    let reverseBtn = document.querySelector(".reverseBtn");
+    reverseBtn.addEventListener("click", () => {
+      console.log(123);
+      anime.reverse();
+      anime2.reverse();
     });
   </script>
   <style>
@@ -54,21 +101,8 @@
       /* 3D 开关 */
       transform-style: preserve-3d;
       transform: perspective(400px);
-
-      animation: anime 12s linear forwards;
       /* 透视 */
       -webkit-perspective: 1000;
-    }
-    @keyframes anime {
-      0% {
-        transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
-      }
-      50% {
-        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-      }
-      100% {
-        transform: rotateX(20deg) rotateY(10deg) rotateZ(10deg);
-      }
     }
     .box {
       position: absolute;

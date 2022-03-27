@@ -20,7 +20,7 @@
     let box3D = document.querySelector(".Box-3D");
     console.log(box3D);
     let spans = "";
-    // 生成四个面
+    // 生成四个面, 自定义模板
     for (let i = 0; i <= 3; i++) {
       spans += `<span style="--i:${i}">${i}</span>`;
     }
@@ -71,6 +71,7 @@
       );
       /* rotateY 旋转面朝向, translateZ 于中心点的举例, 父级w/2 四边重合 */
       transform: rotateY(calc(var(--i) * 90deg)) translateZ(150px);
+
       animation: anime2 4s linear infinite;
     }
 
@@ -79,7 +80,7 @@
         transform: rotateY(calc(var(--i) * 90deg)) translateZ(150px);
       }
       50% {
-        transform: rotateY(calc(var(--i) * 90deg)) translateZ(150px);
+        transform: rotateY(calc(var(--i) * 90deg)) translateZ(10px);
       }
       100% {
         transform: rotateY(calc(var(--i) * 90deg)) translateZ(150px);
@@ -94,9 +95,24 @@
       height: 300px;
       background: rgb(66, 58, 58);
 
+      transform-style: preserve-3d;
+
       /* rotateX 旋转面朝向, translateZ 于中心点的举例, 父级h/2 四边重合 */
       transform: rotateX(90deg) translateZ(150px);
-      transform-style: preserve-3d;
+
+      animation: anime3 4s linear infinite;
+    }
+
+    @keyframes anime3 {
+      0% {
+        transform: rotateX(90deg) translateZ(150px);
+      }
+      50% {
+        transform: rotateX(90deg) translateZ(10px);
+      }
+      100% {
+        transform: rotateX(90deg) translateZ(150px);
+      }
     }
 
     /* 倒影 */
