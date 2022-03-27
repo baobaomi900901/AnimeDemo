@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>日光灯</title>
+  </head>
+  <body
+    class="bg-gray-800 w-screen h-screen overflow-hidden flex justify-center items-center"
+  >
+    <h2
+      contenteditable="true"
+      class="text-center font-bold uppercase tracking-widest"
+    >
+      XC60 T8
+    </h2>
+  </body>
+  <style>
+    body {
+      font-family: "Titillium Web";
+    }
+
+    h2 {
+      color: rgb(45, 56, 73);
+      font-size: 10rem;
+      line-height: 0.72em;
+      width: 100%;
+      outline: none;
+
+      /* 倒影 */
+      -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
+
+      /* 闪烁动画 */
+      animation: anime 4s linear infinite;
+
+      /* color: #fff;
+      text-shadow: 0 0 10px #4f5d9b, 0 0 20px #4f5d9b, 0 0 40px #4f5d9b,
+        0 0 80px #4f5d9b, 0 0 160px #4f5d9b; */
+    }
+
+    /* 理解成间隔, +=0.1% 模拟闪烁 */
+    @keyframes anime {
+      0%,
+      10%,
+      18%,
+      30.1%,
+      35%,
+      70.1%,
+      71%,
+      80.1% {
+        color: rgb(45, 56, 73);
+      }
+      18.1%,
+      30%,
+      35.1%,
+      50%,
+      70%,
+      71.1%,
+      75%,
+      80%,
+      81%,
+      100% {
+        color: #fff;
+        text-shadow: 0 0 10px #4f5d9b, 0 0 20px #4f5d9b, 0 0 40px #4f5d9b,
+          0 0 80px #4f5d9b, 0 0 160px #4f5d9b;
+      }
+    }
+  </style>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>GSAP,CSS翻书</title>
+  </head>
+  <body class="bg-gray-900 w-screen h-screen flex justify-center items-center">
+    <div class="container">
+      <div class="box"></div>
+    </div>
+  </body>
+  <script src="../../node_modules/gsap/dist/gsap.min.js"></script>
+  <script>
+    let box = document.querySelector(".box");
+    for (let i = 0; i <= 12; i++) {
+      let span = document.createElement("span");
+      // 添加两个类, span 用于 gsap 元素选取
+      span.classList.add("span", `span${i}`);
+      // 替换了之前的自定义模板形式
+      span.style.setProperty("--i", i);
+      box.appendChild(span);
+    }
+
+    // 歧视交错角度
+    let rotationY = -195;
+    gsap.to(".span", {
+      duration: 4,
+      transformOrigin: "0% 50%",
+      rotationY: () => {
+        // 元素交错, 每次+15
+        rotationY += 15;
+        return rotationY;
+      },
+      // 交错选项
+      stagger: {
+        // 交错时间
+        each: 1,
+      },
+      ease: "power2.inOut",
+      //   是否重复
+      //   repeat: -1,
+    });
+  </script>
+  <style>
+    .container {
+      position: absolute;
+      top: calc(50% - 160px);
+      left: calc(50% - 100px);
+      width: 200px;
+      height: 320px;
+      /* 3D 开关 */
+      transform-style: preserve-3d;
+      transform: perspective(400px);
+
+      animation: anime 12s linear forwards;
+      /* 透视 */
+      -webkit-perspective: 1000;
+    }
+    @keyframes anime {
+      0% {
+        transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+      }
+      50% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+      }
+      100% {
+        transform: rotateX(20deg) rotateY(10deg) rotateZ(10deg);
+      }
+    }
+    .box {
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+    .box span {
+      position: absolute;
+      border: 1px solid #fff;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(150, 150, 150, 1),
+        rgba(255, 255, 255, 1)
+      );
+      display: inline-block;
+      border-radius: 10px;
+      transform: translateX(100px);
+    }
+  </style>
+</html>

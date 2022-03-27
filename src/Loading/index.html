@@ -19,14 +19,14 @@
     for (let i = 1; i <= 20; i++) {
       spans += `<span style="--i:${i}"></span>`;
     }
-    container.innerHTML = spans;
+    container.innerHTML += spans;
   </script>
   <style>
     body {
       animation: ChangeColor 10s linear infinite;
     }
 
-    /* 色调旋转滤镜 */
+    /* 色调旋转滤镜, IE 不兼容 */
     @keyframes ChangeColor {
       0% {
         filter: hue-rotate(0deg);
