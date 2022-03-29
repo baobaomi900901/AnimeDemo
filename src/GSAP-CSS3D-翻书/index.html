@@ -30,6 +30,7 @@
       // 添加两个类, span 用于 gsap 元素选取
       span.classList.add("span", `span${i}`);
       // 替换了之前的自定义模板形式
+      // TODO setProperty : 设置属性
       span.style.setProperty("--i", i);
       box.appendChild(span);
     }

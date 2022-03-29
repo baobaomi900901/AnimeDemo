@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Canvas</title>
+    <style>
+      canvas {
+        margin: 0 auto;
+        border: 1px solid #fff;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-700 w-screen h-screen">
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("#canvas");
+      canvas.width = 500;
+      canvas.height = 500;
+
+      // 获取上下文对象
+      let ctx = canvas.getContext("2d");
+      // 开启路劲
+      ctx.beginPath();
+      // 起点
+      ctx.moveTo(100, 100);
+      // 结束
+      ctx.lineTo(400, 100);
+      // 着色样式
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 4;
+      // 着色
+      ctx.stroke();
+      // 关闭路劲
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.moveTo(400, 100);
+      ctx.lineTo(400, 400);
+      ctx.strokeStyle = "green";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.moveTo(400, 400);
+      ctx.lineTo(100, 400);
+      ctx.strokeStyle = "blue";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.moveTo(100, 400);
+      ctx.lineTo(100, 100);
+      ctx.strokeStyle = "yellow";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      ctx.closePath();
+
+      // 华夏
+      function drawLine(getContext, x1, y1, x2, y2, color, width) {
+        getContext.beginPath();
+        getContext.moveTo(x1, y1);
+        getContext.lineTo(x2, y2);
+        getContext.strokeStyle = color;
+        getContext.lineWidth = width;
+        getContext.stroke();
+        getContext.closePath();
+      }
+
+      drawLine(ctx, 200, 200, 300, 200, "red", 2);
+      drawLine(ctx, 300, 200, 300, 300, "green", 2);
+      drawLine(ctx, 300, 300, 200, 300, "blue", 2);
+      drawLine(ctx, 200, 300, 200, 200, "yellow", 2);
+    </script>
+  </body>
+</html>
