@@ -3,13 +3,13 @@
 GSAP, AnimeJS
 Online-Tutorials
 
-## 1.初始化项目(忽略掉)
+## 1.初始化项目(忽略)
 
 ```
 yarn init
 ```
 
-## 2.安装依赖(从这里开始)
+## 2.安装依赖
 
 ```
 yarn
