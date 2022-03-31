@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"
+    />
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <title>Document</title>
+  </head>
+  <body class="w-screen h-screen flex justify-center items-center">
+    <div class="box flex">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <svg>
+        <!-- 滤镜, 融合 -->
+        <filter id="gooey">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+          <feColorMatrix
+            values="
+            1.00 0 0 0 0 
+            0.80 0 0 0 0 
+            0.65 0 0 0 0 
+            1 0 0 20 -10 
+            "
+          />
+        </filter>
+      </svg>
+    </div>
+  </body>
+</html>
+<script>
+  // jquery-ui 拖拽, 拖拽动画代码
+  $(function () {
+    $(".box span").draggable();
+  });
+</script>
+<style>
+  .box {
+    /* 使用滤镜, 粘连效果 */
+    filter: url(#gooey);
+  }
+  .box span {
+    display: inline-block;
+    background: #fff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    animation: animate 3s ease-in-out infinite;
+  }
+
+  svg {
+    width: 0;
+    height: 0;
+  }
+
+  @keyframes animate {
+    0%,
+    100% {
+      margin: 10px;
+    }
+    50% {
+      margin: -50px;
+    }
+  }
+</style>

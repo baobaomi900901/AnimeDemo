@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Canvas</title>
+    <style>
+      canvas {
+        margin: 0 auto;
+        border: 1px solid #fff;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-700 w-screen h-screen">
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("#canvas");
+      canvas.width = 500;
+      canvas.height = 500;
+
+      // 获取上下文对象
+      let ctx = canvas.getContext("2d");
+
+      // TODO:绘制可描边的矩形
+      ctx.rect(100, 100, 100, 100);
+      // TODO:先填充, 后描边
+      // 填充矩形
+      ctx.fillStyle = "blue";
+      ctx.fill();
+      // 描边
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 10;
+      ctx.stroke();
+
+      // 阻断
+      //   ctx.beginPath();
+      // TODO: 绘制不可描边的矩形
+      ctx.fillStyle = "red";
+      ctx.fillRect(200, 200, 100, 100);
+
+      //   ctx.beginPath();
+      // TODO: 绘制不可填充的矩形
+      ctx.strokeStyle = "yellow";
+      ctx.strokeRect(300, 300, 100, 100);
+    </script>
+  </body>
+</html>

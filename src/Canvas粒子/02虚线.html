@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Canvas</title>
+    <style>
+      canvas {
+        margin: 0 auto;
+        border: 1px solid #fff;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-700 w-screen h-screen">
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("#canvas");
+      canvas.width = 500;
+      canvas.height = 500;
+
+      // 获取上下文对象
+      let ctx = canvas.getContext("2d");
+
+      function drawLine(getContext, x1, y1, x2, y2, color, width) {
+        getContext.beginPath();
+        getContext.moveTo(x1, y1);
+        getContext.lineTo(x2, y2);
+        getContext.strokeStyle = color;
+        getContext.lineWidth = width;
+        getContext.stroke();
+        getContext.closePath();
+      }
+
+      // 横虚线
+      drawLine(ctx, 200, 200, 205, 200, "red", 2);
+      for (let i = 0; i < 10; i++) {
+        drawLine(ctx, 200 + 10 * i, 200, 205 + 10 * i, 200, "red", 2);
+      }
+
+      // 斜虚线
+      drawLine(ctx, 200, 200, 205, 200, "blue", 2);
+      for (let i = 0; i < 10; i++) {
+        drawLine(
+          ctx,
+          200 + 10 * i,
+          200 + 10 * i,
+          205 + 10 * i,
+          205 + 10 * i,
+          "blue",
+          2
+        );
+      }
+    </script>
+  </body>
+</html>

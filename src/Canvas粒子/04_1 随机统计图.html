@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Canvas</title>
+    <style>
+      canvas {
+        margin: 0 auto;
+        border: 1px solid #fff;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-700 w-screen h-screen">
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("#canvas");
+      canvas.width = 500;
+      canvas.height = 500;
+
+      // 获取上下文对象
+      let ctx = canvas.getContext("2d");
+
+      ctx.beginPath();
+      // 起点
+      ctx.moveTo(50, 50);
+      ctx.lineTo(50, 450);
+      ctx.lineTo(450, 450);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      // 关闭路劲
+      ctx.closePath();
+
+      ctx.fillStyle = "red";
+
+      for (let i = 0; i < 7; i++) {
+        let height = Math.random() * 395 + 5;
+
+        let a = parseInt(Math.random() * 0xffffff).toString(16); // 转换成 16 进制的颜色
+        // let b = parseInt(Math.random() * 0xffffff, 16).toString(16);
+        // let c = parseInt(Math.random() * 0xffffff, 16);
+        // console.log(a, b, c);
+
+        let a2 =
+          "rgb(" +
+          parseInt(Math.random() * 256) +
+          "," +
+          parseInt(Math.random() * 256) +
+          "," +
+          parseInt(Math.random() * 256) +
+          ")";
+
+        console.log(a2);
+
+        // ctx.fillStyle = "#" + a;
+        ctx.fillStyle = a2;
+
+        ctx.fillRect(60 + 40 * i, 450 - height, 20, height);
+      }
+
+      function createRect(num, max) {}
+    </script>
+  </body>
+</html>

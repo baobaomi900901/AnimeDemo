@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>Canvas</title>
+    <style>
+      canvas {
+        margin: 0 auto;
+        border: 1px solid #fff;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-700 w-screen h-screen">
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("#canvas");
+      canvas.width = 500;
+      canvas.height = 500;
+
+      // 获取上下文对象
+      let ctx = canvas.getContext("2d");
+
+      ctx.beginPath();
+      // 起点
+      ctx.moveTo(50, 50);
+      ctx.lineTo(50, 450);
+      ctx.lineTo(450, 450);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+      // 关闭路劲
+      ctx.closePath();
+
+      ctx.fillStyle = "red";
+      ctx.fillRect(200, 100, 100, 350);
+    </script>
+  </body>
+</html>
