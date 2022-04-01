@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../dist/output.css" />
+    <!-- 引入文件 -->
     <link
       rel="stylesheet"
       href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"
@@ -13,7 +14,7 @@
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <title>Document</title>
   </head>
-  <body class="w-screen h-screen flex justify-center items-center">
+  <body class="w-screen h-screen flex justify-center items-center bg-slate-300">
     <div class="box flex">
       <span></span>
       <span></span>
@@ -22,16 +23,17 @@
       <span></span>
       <span></span>
 
+      <!-- 滤镜, 融合 -->
+      <!-- feColorMatrix https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/feColorMatrix-->
       <svg>
-        <!-- 滤镜, 融合 -->
         <filter id="gooey">
           <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
           <feColorMatrix
             values="
-            1.00 0 0 0 0 
-            0.80 0 0 0 0 
-            0.65 0 0 0 0 
-            1 0 0 20 -10 
+            1 0 0 0 0 
+            1 0 0 0 0 
+            1 0 0 0 0 
+            1 -10 0.5 50 -10
             "
           />
         </filter>
@@ -40,7 +42,7 @@
   </body>
 </html>
 <script>
-  // jquery-ui 拖拽, 拖拽动画代码
+  // jquery 拖拽, 拖拽动画代码
   $(function () {
     $(".box span").draggable();
   });
