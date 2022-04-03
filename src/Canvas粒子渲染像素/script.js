@@ -95,16 +95,23 @@ myImage.addEventListener('load', function () {
             // this.size = this.speed * 0.5 // 让粒子 在黑暗中更小
 
             // 周期性切换风格
-            if (switcher) {
-                ctx.globalCompositeOperation = 'lighten'; // 全局混合模式
-            } else {
-                ctx.globalCompositeOperation = 'luminosity'; // 全局混合模式
-            }
+            // if (switcher) {
+            //     ctx.globalCompositeOperation = 'lighten'; // 全局混合模式
+            // } else {
+            //     ctx.globalCompositeOperation = 'luminosity'; // 全局混合模式
+            // }
+
+            // if (counter % 10 === 0) {
+            //     // this.x = Math.random() * canvas.width;
+            //     // this.y = Math.random() * canvas.height;
+            //     this.x = 0
+            //     this.y = 0;
+            // }
 
             // 控制粒子角度, 风格
             // this.y += this.velocity;
-            this.y += this.movement + Math.sin(this.angle) * 2;
-            this.x += this.movement + Math.cos(this.angle) * 1;
+            this.y += this.movement + Math.sin(this.angle);
+            this.x += this.movement + Math.cos(this.angle) * 3;
             // this.x += this.movement / 4; 
             // 大于canvas高度，重新生成
             if (this.y >= canvas.height) {
@@ -125,16 +132,16 @@ myImage.addEventListener('load', function () {
             }
             // ctx.fillStyle = gradient1 // 自定义色阶填充
             ctx.font = '20px Arial';
-            // ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); // 圆形粒子
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); // 圆形粒子
             // ctx.strokeRect(this.x, this.y, this.size * 5, this.size * 5); // 矩形粒子
             // ctx.fillText(this.letter, this.x, this.y); // 文字粒子
 
             // 混合粒子形状
-            if (this.random < 0.02) {
-                ctx.fillText(this.letter, this.x, this.y); // 文字粒子
-            } else {
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); // 圆形粒子
-            }
+            // if (this.random < 0.02) {
+            //     ctx.fillText(this.letter, this.x, this.y); // 文字粒子
+            // } else {
+            //     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); // 圆形粒子
+            // }
             ctx.fill();
 
         }
