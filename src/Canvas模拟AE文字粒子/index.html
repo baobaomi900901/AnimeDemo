@@ -16,7 +16,12 @@
     class="w-screen h-screen bg-gray-900 flex flex-col justify-center items-center"
   >
     <canvas id="scene" class="w-screen h-screen"></canvas>
-    <input type="text" id="copy" value="阿虚" class="absolute bottom-4" />
+    <input
+      type="text"
+      id="inpout"
+      value="baobaomi & vivian"
+      class="absolute bottom-4"
+    />
   </body>
   <script>
     // 获取 canvas 画布
@@ -47,7 +52,7 @@
     ];
 
     // 获取 输入框
-    var copy = document.querySelector("#copy");
+    var inpout = document.querySelector("#inpout");
 
     //
     // var ww = (canvas.width = window.innerWidth);
@@ -75,9 +80,8 @@
       this.vy = (Math.random() - 0.5) * 20;
       this.accX = 0;
       this.accY = 0;
-      // friction 摩擦力
-      this.friction = Math.random() * 0.05 + 0.95;
-      this.color = colors[Math.floor(Math.random() * 6)];
+      this.friction = Math.random() * 0.038 + 0.95; // friction: 摩擦力, 数值越大，摩擦力越小
+      this.color = colors[Math.floor(Math.random() * 6)]; // 随机颜色
     }
 
     Particle.prototype.render = function () {
@@ -99,9 +103,8 @@
       var a = this.x - mouse.x;
       var b = this.y - mouse.y;
 
-      // 距离 distance
+      // distance:距离
       var distance = Math.sqrt(a * a + b * b);
-      console.log("distance :>> ", distance);
       if (distance < radius * 30) {
         particles.push(new Particle(mouse.x, mouse.y));
         this.accX = (this.x - mouse.x) / 100;
@@ -110,6 +113,45 @@
         this.vy += this.accY;
       }
     };
+
+    function initScene() {
+      ww = canvas.width = window.innerWidth;
+      wh = canvas.height = window.innerHeight;
+
+      // 清空一个指定像素, 坐标 x, 坐标 y, 宽度 w, 高度 h
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "bold " + ww / 10 + "px sans-serif";
+
+      ctx.textAlign = "center";
+      ctx.fillText(inpout.value, ww / 2, wh / 2); // 文字渲染进 canvas 中
+
+      var data = ctx.getImageData(0, 0, ww, wh).data;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "lighter"; // lighter screen
+
+      particles = [];
+      for (var i = 0; i < ww; i += Math.round(ww / 300)) {
+        for (var j = 0; j < wh; j += Math.round(ww / 300)) {
+          if (data[(i + j * ww) * 4 + 3] > 150) {
+            particles.push(new Particle(i, j));
+          }
+        }
+      }
+      console.log("particles.length :>> ", particles.length);
+      amount = particles.length;
+      // console.log("amount :>> ", amount);
+    }
+
+    function render(a) {
+      requestAnimationFrame(render);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 5; i < amount; i++) {
+        particles[i].render();
+      }
+    }
+
+    initScene();
+    requestAnimationFrame(render);
 
     function onMouseMove(e) {
       console.log("onMouseMove, 鼠标移动");
@@ -130,34 +172,6 @@
       mouse.y = -9999;
     }
 
-    function initScene() {
-      ww = canvas.width = window.innerWidth;
-      wh = canvas.height = window.innerHeight;
-
-      // 清空一个指定像素, 坐标 x, 坐标 y, 宽度 w, 高度 h
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = "bold " + ww / 8 + "px sans-serif";
-
-      ctx.textAlign = "center";
-      ctx.fillText(copy.value, ww / 2, wh / 2);
-
-      var data = ctx.getImageData(0, 0, ww, wh).data;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "lighter"; // lighter screen
-
-      particles = [];
-      for (var i = 0; i < ww; i += Math.round(ww / 300)) {
-        for (var j = 0; j < wh; j += Math.round(ww / 300)) {
-          if (data[(i + j * ww) * 4 + 3] > 150) {
-            particles.push(new Particle(i, j));
-          }
-        }
-      }
-      console.log("particles.length :>> ", particles.length);
-      amount = particles.length;
-      console.log("amount :>> ", amount);
-    }
-
     function onMouseClick() {
       radius++;
       if (radius === 3) {
@@ -165,21 +179,11 @@
       }
     }
 
-    function render(a) {
-      requestAnimationFrame(render);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (var i = 5; i < amount; i++) {
-        particles[i].render();
-      }
-    }
-
-    // copy.addEventListener("keyup", initScene);
-    // window.addEventListener("resize", initScene);
-    // window.addEventListener("mousemove", onMouseMove);
-    // window.addEventListener("touchmove", onTouchMove);
-    // window.addEventListener("click", onMouseClick);
-    // window.addEventListener("touchend", onTouchEnd);
-    initScene();
-    requestAnimationFrame(render);
+    inpout.addEventListener("keyup", initScene); // 输入时触发
+    window.addEventListener("resize", initScene); // 窗口大小改变时
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("click", onMouseClick);
+    window.addEventListener("touchend", onTouchEnd);
   </script>
 </html>
