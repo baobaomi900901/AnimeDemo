@@ -119,6 +119,7 @@ function drawImage() {
         let xtt = 0;
         let ytt = 0;
         for (let y = 0, y2 = data.height; y < y2; y++) {
+            // 像素化
             if (ytt < 4) {
                 ytt++
             } else {
@@ -132,6 +133,7 @@ function drawImage() {
                     let red = data.data[y * 4 * data.width + x * 4];
                     let green = data.data[y * 4 * data.width + x * 4 + 1];
                     let blue = data.data[y * 4 * data.width + x * 4 + 2];
+                    // 像素化
                     if (xtt < 4) {
                         xtt++;
                     } else {
