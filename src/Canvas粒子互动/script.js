@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 304;
+canvas.height = 304;
 
 // 粒子
 let particleArray = [];
@@ -22,7 +22,10 @@ canvas.addEventListener('mousemove', function (event) { // 鼠标移动
     // console.log('mouse.x, mouse.y :>> ', mouse.x, mouse.y, canvas.clientLeft / 2, canvas.clientTop / 2);
 })
 
-
+canvas.addEventListener('mouseout', function (event) { // 鼠标移出
+    mouse.x = null;
+    mouse.y = null;
+})
 function drawImage() {
     let imageWidth = png.width;
     let imageHeight = png.height;
@@ -135,7 +138,6 @@ function drawImage() {
                         xtt = 1;
                         xt = !xt;
                     }
-                    // xt = !xt;
                     let alpha = xt && yt ? 1 : 0;
                     // console.log('xt, yt :>> ', xt, yt);
                     let color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
