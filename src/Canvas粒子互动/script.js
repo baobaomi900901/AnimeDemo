@@ -50,6 +50,7 @@ function drawImage() {
             // friction
             this.density = Math.random() * 10 + 1;
         }
+        // 粒子绘制方法
         draw() {
             ctx.beginPath();
             // ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -57,6 +58,7 @@ function drawImage() {
             ctx.fill();
             ctx.closePath();
         }
+        // 粒子更新方法
         update() {
             ctx.fillStyle = this.color
             ctx.strokeStyle = this.color
@@ -106,9 +108,7 @@ function drawImage() {
                     this.y -= deltaY * 0.2;
                 }
             }
-
             this.draw();
-
         }
     }
 
@@ -152,6 +152,7 @@ function drawImage() {
 
     function animate() {
         requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 

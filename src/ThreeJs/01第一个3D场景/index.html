@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--引入three.js三维引擎-->
+    <script src="http://www.yanhuangxueyuan.com/versions/threejsR92/build/three.js"></script>
+    <title>第一个场景</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        /* 隐藏body窗口区域滚动条 */
+      }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    // 1.穿件一个场景
+    var scene = new THREE.Scene();
+
+    // 2.创建一个几何体
+    var geometry = new THREE.BoxGeometry(100, 100, 100); //创建一个立方体几何对象Geometry
+
+    // 3.创建材质
+    var material = new THREE.MeshLambertMaterial({
+      color: 0x0000ff,
+    }); //材质对象Material
+
+    // 4.创建一个模型, 把 几何体+ 材质 组合到一起, 变成模型
+    var mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+
+    // 5.将模型添加到场景中
+    scene.add(mesh);
+
+    // 6.创建一个光源, 然后设置光源位置, 将光源添加到场景中
+    var point = new THREE.PointLight(0xffffff);
+    point.position.set(400, 200, 300); //点光源位置
+    scene.add(point); //点光源添加到场景中
+
+    // 7.创建一个相机
+    var width = window.innerWidth; //窗口宽度
+    var height = window.innerHeight; //窗口高度
+    var k = width / height; //窗口宽高比
+    var s = 200; //三维场景显示范围控制系数，系数越大，显示的范围越大
+    //创建相机对象
+    var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+    camera.position.set(200, 300, 200); //设置相机位置
+    camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
+
+    /**
+     * 创建渲染器对象
+     */
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(width, height); //设置渲染区域尺寸
+    renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
+    document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+    //执行渲染操作   指定场景、相机作为参数
+    renderer.render(scene, camera);
+  </script>
+</html>
