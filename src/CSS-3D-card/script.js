@@ -30,7 +30,7 @@ cardWrapper.addEventListener("mousemove", (e) => {
     highlight.style.top = `${(rotationX / mostY) * 30}%`;
 });
 
-cardWrapper.addEventListener("mouseleave", () => {
+cardWrapper.addEventListener("mouseout", () => {
     // 回归属性
     card.style.transition = "transform 0.5s ease-in-out";
     card.style.transform = `rotateY(0) rotateX(0)`;
