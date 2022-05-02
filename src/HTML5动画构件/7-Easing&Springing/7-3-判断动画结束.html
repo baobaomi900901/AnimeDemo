@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-3-判断动画结束</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <div class="ml-10">
+      <p id="velocity">---</p>
+    </div>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let velocity = document.getElementById("velocity");
+        let ball = new Ball(ctx);
+
+        let utils = new Utils(canvas);
+        let mouse = utils.captureMouse();
+
+        let easing = 0.05;
+
+        let raf;
+        let v = 0;
+
+        // 目标位置
+        let targetX = canvas.width / 2;
+
+        ball.y = canvas.width / 2;
+
+        function drawFrame() {
+          raf = window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          let dx = targetX - ball.x;
+
+          // Math.abs 取绝对值
+          if (Math.abs(dx) < 1) {
+            ball.x = targetX;
+            window.cancelAnimationFrame(raf);
+            velocity.innerHTML = `帧: ${v}, Animation done!`;
+          } else {
+            ball.x += dx * easing;
+            velocity.innerHTML = `帧: ${v}`;
+            v++;
+          }
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

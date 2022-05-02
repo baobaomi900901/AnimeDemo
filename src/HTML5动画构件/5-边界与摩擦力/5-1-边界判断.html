@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>5-1-边界判断</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let balls = [];
+        let numBalls = 10;
+
+        // 添加球
+        for (var ball, i = 0; i < numBalls; i++) {
+          ball = new Ball(ctx);
+
+          ball.id = "ball" + i;
+          // 随机位置
+          ball.x = Math.random() * (canvas.width - ball.radius / 2);
+          ball.y = Math.random() * (canvas.height - ball.radius / 2);
+          // 随机轴偏移量
+          ball.vx = Math.random() * 2 - 1;
+          ball.vy = Math.random() * 2 - 1;
+          balls.push(ball);
+        }
+        // console.log(balls);
+
+        // 实现逻辑, 判断球体是否超出边界, 如果超出, 则按照 id 在球体数组中 删除该球体
+        function draw(ball, pos) {
+          // 轴偏移量换算成像素偏移量 - 速度
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+
+          // 判断球体是否超出边界
+          if (
+            ball.x - ball.radius > canvas.width ||
+            ball.x + ball.radius < 0 ||
+            ball.y - ball.radius > canvas.height ||
+            ball.y + ball.radius < 0
+          ) {
+            balls.splice(pos, 1); // 删除球数组中的元素
+            if (balls.length > 0) {
+              console.log("removed", ball.id);
+            } else {
+              console.log("all removed");
+              cancelAnimationFrame(raf);
+            }
+          }
+          ball.draw();
+        }
+
+        // 定义一个 id 接收 requestAnimationFrame 的返回值, 用于取消动画 cancelAnimationFrame
+        var raf;
+        function drawFrame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          raf = requestAnimationFrame(drawFrame);
+          //   let i = balls.length;
+          //   while (i--) {
+          //     draw(balls[i], i);
+          //   }
+
+          balls.forEach((ball, pos) => {
+            draw(ball, pos);
+          });
+
+          console.log("raf...");
+        }
+        drawFrame();
+      };
+
+      // 复习:
+      // splice(pos, num)
+      // pos: 删除的index
+      // num: 删除的个数, 例: 1, 删除一个元素, 2, 删除两个元素;
+      //   let arr = ["a", "b", "c"];
+      //   arr.splice(0, 1);
+      //   console.log(arr);
+    </script>
+  </body>
+</html>
+<style></style>

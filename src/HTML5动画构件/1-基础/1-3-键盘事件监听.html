@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>键盘事件监听</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script>
+      const canvas = document.getElementById("canvas");
+      // 按键按下
+      window.addEventListener("keydown", (e) => {
+        console.log(e.type);
+      });
+      // 按键抬起
+      window.addEventListener("keyup", (e) => {
+        console.log(e.type);
+      });
+    </script>
+  </body>
+</html>

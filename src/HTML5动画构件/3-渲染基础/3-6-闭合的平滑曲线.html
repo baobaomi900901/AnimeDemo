@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-6-闭合的平滑曲线</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas
+      id="canvas"
+      width="400"
+      height="400"
+      class="bg-white ml-10"
+    ></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let points = [];
+        let numPoints = 11;
+        let ctrlPoints = {};
+        let ctrlPoints1 = {};
+
+        // 这里 var 的 i 会存储在 window 上
+        for (var i = 0; i < numPoints; i++) {
+          points.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+          });
+        }
+
+        //find the first midpoint and move to it
+        ctrlPoints1.x = (points[0].x + points[numPoints - 1].x) / 2;
+        ctrlPoints1.y = (points[0].y + points[numPoints - 1].y) / 2;
+        ctx.beginPath();
+        ctx.moveTo(ctrlPoints1.x, ctrlPoints1.y);
+
+        //绘制曲线
+        for (i = 0; i < numPoints - 1; i++) {
+          ctrlPoints.x = (points[i].x + points[i + 1].x) / 2;
+          ctrlPoints.y = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(
+            points[i].x,
+            points[i].y,
+            ctrlPoints.x,
+            ctrlPoints.y
+          );
+        }
+
+        // 闭合线圈, 这里的 i 调用之前存储在 window 上的 i
+        ctx.quadraticCurveTo(
+          points[i].x,
+          points[i].y,
+          ctrlPoints1.x,
+          ctrlPoints1.y
+        );
+        ctx.stroke();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>6-3-拖动对象</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let utils = new Utils(canvas);
+        let mouse = utils.captureMouse();
+
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        let mdRAF;
+
+        canvas.addEventListener(
+          "mousedown",
+          function (e) {
+            if (utils.containsPoint(ball.getBounds(), mouse.x, mouse.y)) {
+              canvas.addEventListener("mouseup", onMouseUp);
+              canvas.addEventListener("mousemove", onMouseMove);
+            }
+          },
+          true
+        );
+
+        function onMouseUp(e) {
+          //   console.log("onMouseUp", mouse.x, mouse.y);
+          canvas.removeEventListener("mouseup", onMouseUp);
+          canvas.removeEventListener("mousemove", onMouseMove);
+        }
+
+        function onMouseMove(e) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+          //   console.log("onMouseMove", mouse.x, mouse.y);
+        }
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          //   ball.x = mouse.x;
+          //   ball.y = mouse.y;
+          ball.draw();
+        }
+
+        drawFrame();
+
+        // ball.draw();
+      };
+    </script>
+  </body>
+</html>

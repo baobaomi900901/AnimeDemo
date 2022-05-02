@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-10-计算两点之间的向量</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <div class="ml-10">
+      <p class="text-white">向量(r1 红色 对比 r2 蓝色):</p>
+      <br />
+      <textarea id="log" class="w-64 h-20"></textarea>
+    </div>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let log = document.getElementById("log");
+
+        // 随机点1
+        let rect1 = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+        };
+        ctx.fillStyle = "red";
+        ctx.fillRect(rect1.x - 2, rect1.y - 2, 4, 4); // -2 是因为宽高是 4
+
+        // 随机点2
+        let rect2 = {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+        };
+        ctx.fillStyle = "blue";
+        ctx.fillRect(rect2.x - 2, rect2.y - 2, 4, 4); // -2 是因为宽高是 4
+
+        var dx = rect2.x - rect1.x; // x轴方向, 左 | 右
+        var dy = rect2.y - rect1.y; // y轴方向, 上 | 下
+        var distance = Math.sqrt(dx * dx + dy * dy); // 计算距离
+
+        // 打印结果
+        log.value = `蓝点在红点的: ${dx < 0 ? "左" : "右"} ${
+          dy < 0 ? "上" : "下"
+        } (方)\ndistance: ${distance}`;
+      };
+    </script>
+  </body>
+</html>
+<style></style>

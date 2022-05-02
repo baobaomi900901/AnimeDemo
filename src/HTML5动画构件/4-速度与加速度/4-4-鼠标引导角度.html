@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>4-4-鼠标引导角度</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Arrow from "../hooks/arrow.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let arrow = new Arrow(ctx);
+        let mouse = new Utils().captureMouse(canvas);
+        let speed = 1;
+
+        arrow.x = 0;
+        arrow.y = 0;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 防抖
+          if (
+            Math.floor(arrow.x + 0.5) === mouse.x &&
+            Math.floor(arrow.y + 0.5) === mouse.y
+          ) {
+            speed = 0;
+          } else {
+            speed = 1;
+          }
+
+          // 鼠标与箭头的距离
+          let dx = mouse.x - arrow.x;
+          let dy = mouse.y - arrow.y;
+
+          // 角度
+          let angle = Math.atan2(dy, dx);
+
+          // console.log("angle", angle);
+
+          // 移动距离
+          let vx = Math.cos(angle) * speed;
+          let vy = Math.sin(angle) * speed;
+
+          // console.log(vx, vy);
+
+          console.log(vx, vy);
+
+          // 箭头转向
+          arrow.rotate = angle;
+
+          arrow.x += vx;
+          arrow.y += vy;
+
+          arrow.draw();
+        }
+        drawFrame();
+      };
+
+      // let bbm = -0;
+      // bbm = Math.abs(bbm);
+      // console.log(bbm);
+
+      // console.log(1 / -0 < 0);
+      // if (1 / -0) {
+      //   console.log(1);
+      // }
+    </script>
+  </body>
+</html>
+<style></style>

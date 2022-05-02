@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-13-控制像素RGB</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+
+    <script type="module">
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let mouse = new Utils(canvas).captureMouse();
+
+        function drawFrame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          window.requestAnimationFrame(drawFrame, canvas);
+          // 绘制列图形
+          for (var i = 0; i < canvas.width; i += 10) {
+            for (var j = 0; j < canvas.height; j += 10) {
+              ctx.fillStyle =
+                i % 20 === 0 ? "red" : i % 30 === 0 ? "gold" : "blue";
+              ctx.fillRect(i, j, 10, 10);
+            }
+          }
+
+          // 获取图像数据
+          let imagedata = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          // 提取像素数据
+          let pixels = imagedata.data;
+          // console.log(imagedata);
+
+          for (var y = 0; y < imagedata.height; y++) {
+            for (var x = 0; x < imagedata.width; x++) {
+              let dx = x - mouse.x;
+              let dy = y - mouse.y;
+              let dist = Math.sqrt(dx * dx + dy * dy);
+              let offset = (x + y * imagedata.width) * 4;
+              let r = pixels[offset];
+              let g = pixels[offset + 1];
+              let b = pixels[offset + 2];
+
+              //  R,G,B
+              pixels[offset] = Math.cos(r * dist * 0.001) * 255;
+              pixels[offset + 1] = Math.sin(g * dist * 0.001) * 255;
+              pixels[offset + 2] = Math.cos(b * dist * 0.001) * 255;
+            }
+          }
+
+          // 更新图像数据
+          ctx.putImageData(imagedata, 0, 0);
+        }
+
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

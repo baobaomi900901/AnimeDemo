@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>4-11-宇宙飞船</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ship from "../hooks/ship.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ship = new Ship(ctx);
+
+        let vx = 0;
+        let vy = 0;
+        let vr = 0; // 角度
+        let thrust = 0; // 加速度
+
+        // 角度
+        ship.x = canvas.width / 2;
+        ship.y = canvas.height / 2;
+
+        window.addEventListener("keydown", function (e) {
+          console.log("e.keyCode :>> ", e.keyCode);
+          switch (e.keyCode) {
+            case 37:
+              vr = -3;
+              break;
+            case 39:
+              vr = 3;
+              break;
+            case 38:
+              thrust = 0.05;
+              ship.showFlame = true; // 显示火焰
+              break;
+            case 40:
+              thrust = 0;
+              break;
+          }
+        });
+
+        window.addEventListener("keyup", function (e) {
+          vr = 0;
+          thrust = 0;
+          ship.showFlame = false;
+        });
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          // 控制角度
+          ship.rotate += (vr * Math.PI) / 180;
+
+          // 飞行向量
+          let angle = ship.rotate;
+          let ax = Math.cos(angle) * thrust;
+          let ay = Math.sin(angle) * thrust;
+
+          vx += ax;
+          vy += ay;
+          ship.x += vx;
+          ship.y += vy;
+          ship.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

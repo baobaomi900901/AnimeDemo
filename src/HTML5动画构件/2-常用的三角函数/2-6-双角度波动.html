@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-6-双角度波动</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let angleX = 0;
+        let angleY = 0;
+        let range = 50; // 运动范围
+        let centerX = canvas.width / 2; // 初始 x 轴
+        let centerY = canvas.height / 2; // 初始 y 轴
+        let speedX = 0.07; // x 速率
+        let speedY = 0.11; // y 速率
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 通过 speedX speedY 的频率差来控制 两个不同角度的波动
+          ball.x = centerX + Math.sin(angleX) * range;
+          ball.y = centerY + Math.sin(angleY) * range;
+
+          // 通过控制speed来控制 Math.sin(angle) 正负频率
+          angleX += speedX;
+          angleY += speedY;
+
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>

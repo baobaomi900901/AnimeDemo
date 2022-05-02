@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-8-径向渐变</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        let c1 = { x: 200, y: 200, radius: 0 };
+        let c2 = { x: 200, y: 200, radius: 50 };
+
+        // 创建一个线性渐变
+        let gradient = ctx.createRadialGradient(
+          c1.x,
+          c1.y,
+          c1.radius,
+          c2.x,
+          c2.y,
+          c2.radius
+        );
+
+        // 添加渐变颜色, 比例, 颜色
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(1, "yellow");
+
+        // 绘制线性渐变
+        ctx.fillStyle = gradient;
+        ctx.fillRect(150, 150, 100, 100);
+      };
+    </script>
+  </body>
+</html>
+<style></style>

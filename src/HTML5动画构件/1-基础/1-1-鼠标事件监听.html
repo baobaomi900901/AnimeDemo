@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>鼠标事件监听</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script>
+      var canvas = document.getElementById("canvas");
+      function onMouseEvent(event, action) {
+        console.log(event.type);
+      }
+      // 鼠标按下
+      canvas.addEventListener("mousedown", onMouseEvent, false);
+      // 鼠标抬起
+      canvas.addEventListener("mouseup", onMouseEvent, false);
+      // 鼠标点击
+      canvas.addEventListener("click", onMouseEvent, false);
+      // 鼠标双击
+      canvas.addEventListener("dblclick", onMouseEvent, false);
+      // 鼠标滚轮
+      canvas.addEventListener("mousewheel", onMouseEvent, false);
+      // 鼠标移入
+      canvas.addEventListener("mouseover", onMouseEvent, false);
+      // 鼠标移动
+      canvas.addEventListener("mousemove", onMouseEvent, false);
+      // 鼠标移出
+      canvas.addEventListener("mouseout", onMouseEvent, false);
+    </script>
+  </body>
+</html>

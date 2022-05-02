@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>键盘键位监听</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script>
+      var canvas = document.getElementById("canvas");
+      // 按键键位监听
+      window.addEventListener("keydown", (e) => {
+        // 键位编码
+        switch (e.keyCode) {
+          case 38:
+            console.log("up!");
+            break;
+          case 40:
+            console.log("down!");
+            break;
+          case 37:
+            console.log("left!");
+            break;
+          case 39:
+            console.log("right!");
+            break;
+
+          default:
+            console.log(e.keyCode);
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>

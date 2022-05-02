@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-12-弹簧动画-三点之间</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        var canvas = document.getElementById("canvas"),
+          ctx = canvas.getContext("2d"),
+          utils = new Utils(),
+          mouse = utils.captureMouse(canvas),
+          ball = new Ball(ctx, 20),
+          handles = [],
+          numHandles = 3,
+          spring = 0.03,
+          friction = 0.9,
+          movingHandle = null;
+
+        // 循环小球
+        for (var handle, i = 0; i < numHandles; i++) {
+          // 创建小球
+          handle = new Ball(ctx, 10, "#0000ff");
+          // 随机位置
+          handle.x = Math.random() * canvas.width;
+          handle.y = Math.random() * canvas.height;
+          // 添加到数组
+          handles.push(handle);
+        }
+
+        //
+        function applyHandle(handle) {
+          var dx = handle.x - ball.x,
+            dy = handle.y - ball.y;
+          ball.vx += dx * spring;
+          ball.vy += dy * spring;
+        }
+
+        // 绘制线 与 小球
+        function drawHandle(handle) {
+          ctx.moveTo(ball.x, ball.y);
+          ctx.lineTo(handle.x, handle.y);
+          ctx.stroke();
+          handle.draw(ctx);
+        }
+
+        (function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 循环加载
+          handles.forEach(applyHandle);
+          ball.vx *= friction;
+          ball.vy *= friction;
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+          ctx.beginPath();
+          // 循环绘制
+          handles.forEach(drawHandle);
+          ball.draw();
+        })();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

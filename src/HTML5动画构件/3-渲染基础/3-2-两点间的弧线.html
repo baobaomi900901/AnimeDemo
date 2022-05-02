@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-2-两点间的弧线</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas
+      id="canvas"
+      width="400"
+      height="400"
+      class="bg-white ml-10"
+    ></canvas>
+
+    <script type="module">
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        let x1 = 100;
+        let y1 = 200;
+        let x2 = 300;
+        let y2 = 200;
+
+        // 获取鼠标位置
+        let a = new Utils(canvas).captureMouse();
+        draw();
+        canvas.addEventListener("mousemove", function () {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 解构鼠标坐标
+          let { x, y } = a;
+
+          ctx.beginPath();
+          // 开始点
+          ctx.moveTo(x1, y1);
+          // 贝塞尔曲线, ( 控制点xy, 结束点xy )
+          ctx.quadraticCurveTo(x, y, x2, y2);
+          ctx.stroke();
+
+          draw(1);
+        });
+
+        function draw(on) {
+          // 起始点
+          ctx.beginPath();
+          ctx.rect(x1 - 2, y1 - 2, 4, 4);
+          ctx.fillStyle = "red";
+          ctx.fill();
+
+          // 结束点
+          ctx.beginPath();
+          ctx.rect(x2 - 2, y2 - 2, 4, 4);
+          ctx.fillStyle = "blue";
+          ctx.fill();
+
+          if (!on) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
+<style></style>

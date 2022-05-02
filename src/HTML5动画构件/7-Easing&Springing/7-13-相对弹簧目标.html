@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-13-相对弹簧目标</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let mouse = new Utils().captureMouse(canvas);
+        let easing = 0.03;
+
+        let spring = 0.05;
+        let friction = 0.9;
+        let gravity = 4;
+
+        let vx = 0;
+        let vy = 0;
+
+        // 灯笼差异
+        let springLength = 100;
+
+        ball.x = mouse.x = canvas.width / 2;
+        ball.y = mouse.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          //  atan(), 必须 内圈 - 外圈
+          let dx = ball.x - mouse.x;
+          let dy = ball.y - mouse.y;
+          // 抖动
+          //   let dx = mouse.x - ball.x;
+          //   let dy = mouse.y - ball.y;
+          let angle = Math.atan2(dy, dx);
+          let targetX = mouse.x + Math.cos(angle) * springLength;
+          let targetY = mouse.y + Math.sin(angle) * springLength;
+
+          vx += (targetX - ball.x) * spring;
+          vy += (targetY - ball.y) * spring;
+
+          vx *= friction;
+          vy *= friction;
+
+          ball.x += vx;
+          ball.y += vy;
+
+          // 线
+          ctx.beginPath();
+          ctx.moveTo(ball.x, ball.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+
+          ball.draw();
+        }
+
+        canvas.addEventListener("mouseout", function () {
+          mouse.x = canvas.width / 2;
+          mouse.y = canvas.height / 2;
+        });
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

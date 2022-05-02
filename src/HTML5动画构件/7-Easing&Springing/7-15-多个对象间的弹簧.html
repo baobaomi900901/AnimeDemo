@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-15-多个对象间的弹簧</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let utils = new Utils();
+        let mouse = utils.captureMouse(canvas);
+        let ball0 = new Ball(ctx, 20);
+        let ball1 = new Ball(ctx, 20, "blue");
+        let ball2 = new Ball(ctx, 20, "yellow");
+        let ball0_dragging = false; // 是否拖拽
+        let ball1_dragging = false;
+        let ball2_dragging = false;
+
+        let spring = 0.05;
+        let friction = 0.9;
+
+        let vx = 0;
+        let vy = 0;
+
+        // 灯笼差异
+        let springLength = 100;
+
+        ball0.x = Math.random() * canvas.width;
+        ball0.y = Math.random() * canvas.height;
+
+        ball1.x = Math.random() * canvas.width;
+        ball1.y = Math.random() * canvas.height;
+
+        ball2.x = Math.random() * canvas.width;
+        ball2.y = Math.random() * canvas.height;
+
+        // 点击, 开启拖拽
+        canvas.addEventListener("mousedown", () => {
+          if (utils.containsPoint(ball0.getBounds(), mouse.x, mouse.y)) {
+            ball0_dragging = true;
+          }
+          if (utils.containsPoint(ball1.getBounds(), mouse.x, mouse.y)) {
+            ball1_dragging = true;
+          }
+          if (utils.containsPoint(ball2.getBounds(), mouse.x, mouse.y)) {
+            ball2_dragging = true;
+          }
+        });
+
+        // 抬起, 关闭拖拽
+        canvas.addEventListener("mouseup", () => {
+          ball0_dragging = false;
+          ball1_dragging = false;
+          ball2_dragging = false;
+        });
+
+        // 移动时计算弹簧长度
+        canvas.addEventListener("mousemove", () => {
+          if (ball0_dragging) {
+            ball0.x = mouse.x;
+            ball0.y = mouse.y;
+          }
+          if (ball1_dragging) {
+            ball1.x = mouse.x;
+            ball1.y = mouse.y;
+          }
+          if (ball2_dragging) {
+            ball2.x = mouse.x;
+            ball2.y = mouse.y;
+          }
+        });
+        function springTo(ballA, ballB) {
+          let dx = ballB.x - ballA.x;
+          let dy = ballB.y - ballA.y;
+          let angle = Math.atan2(dy, dx);
+          let targetX = ballB.x - Math.cos(angle) * springLength;
+          let targetY = ballB.y - Math.sin(angle) * springLength;
+
+          ballA.vx += (targetX - ballA.x) * spring;
+          ballA.vy += (targetY - ballA.y) * spring;
+          ballA.vx *= friction;
+          ballA.vy *= friction;
+          ballA.x += ballA.vx;
+          ballA.y += ballA.vy;
+        }
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          if (!ball0_dragging) {
+            springTo(ball0, ball1);
+            springTo(ball0, ball2);
+          }
+          if (!ball1_dragging) {
+            springTo(ball1, ball0);
+            springTo(ball1, ball2);
+          }
+          if (!ball2_dragging) {
+            springTo(ball2, ball0);
+            springTo(ball2, ball1);
+          }
+          // 线
+          ctx.beginPath();
+          ctx.moveTo(ball0.x, ball0.y);
+          ctx.lineTo(ball1.x, ball1.y);
+          ctx.lineTo(ball2.x, ball2.y);
+          ctx.lineTo(ball0.x, ball0.y);
+          ctx.stroke();
+
+          ball0.draw();
+          ball1.draw();
+          ball2.draw();
+        }
+
+        // canvas.addEventListener("mouseout", function () {
+        //   mouse.x = canvas.width / 2;
+        //   mouse.y = canvas.height / 2;
+        // });
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

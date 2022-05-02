@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-2-拖拽缓动</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+
+        let utils = new Utils(canvas);
+        let mouse = utils.captureMouse();
+
+        let easing = 0.05;
+        let isMouseDown = false;
+
+        // 目标位置
+        let targetX = canvas.width / 2;
+        let targetY = canvas.height / 2;
+
+        canvas.addEventListener(
+          "mousedown",
+          function (e) {
+            if (utils.containsPoint(ball.getBounds(), mouse.x, mouse.y)) {
+              isMouseDown = true;
+              canvas.addEventListener("mouseup", onMouseUp);
+              canvas.addEventListener("mousemove", onMouseMove);
+            }
+          },
+          true
+        );
+
+        function onMouseUp(e) {
+          //   console.log("onMouseUp", mouse.x, mouse.y);
+          isMouseDown = false;
+          canvas.removeEventListener("mouseup", onMouseUp);
+          canvas.removeEventListener("mousemove", onMouseMove);
+        }
+
+        function onMouseMove(e) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+          //   console.log("onMouseMove", mouse.x, mouse.y);
+        }
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          if (!isMouseDown) {
+            // 目标位置与当前位置的差值(越来越小) --> 加速度
+            let vx = (targetX - ball.x) * easing;
+            let vy = (targetY - ball.y) * easing;
+
+            ball.x += vx;
+            ball.y += vy;
+          }
+
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

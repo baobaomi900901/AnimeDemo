@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>4-8-键盘控制加速度-双轴</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <div class="ml-10">
+      <p>方向键左右控制</p>
+      <br />
+      <p id="velocity"></p>
+    </div>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let velocity = document.getElementById("velocity");
+        let ball = new Ball(ctx);
+
+        // 初始速度
+        let vx = 0;
+        let vy = 0;
+        // 加速度
+        let ax = 0;
+        let ay = 0;
+
+        window.addEventListener("keydown", (e) => {
+          // 防抖函数
+          switch (e.keyCode) {
+            // 方向键左
+            case 37:
+              ax = -0.1;
+              break;
+            // 方向键右
+            case 39:
+              ax = 0.1;
+              break;
+            // 方向键上
+            case 38:
+              ay = -0.1;
+              break;
+            // 方向键下
+            case 40:
+              ay = 0.1;
+              break;
+          }
+        });
+
+        window.addEventListener("keyup", (e) => {
+          ax = 0;
+          ay = 0;
+        });
+
+        // 初始化角度
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (ball.x > canvas.width + ball.radius) {
+            ball.x = -ball.radius;
+          }
+          if (ball.x < -ball.radius) {
+            ball.x = canvas.width + ball.radius;
+          }
+
+          if (ball.y > canvas.height + ball.radius) {
+            ball.y = -ball.radius;
+          }
+          if (ball.y < -ball.radius) {
+            ball.y = canvas.height + ball.radius;
+          }
+
+          vx += ax;
+          vx = Math.round(vx * 10) / 10;
+
+          vy += ay;
+          vy = Math.round(vy * 10) / 10;
+
+          ball.x += vx;
+          ball.y += vy;
+          ball.draw();
+          velocity.innerHTML = `vx: ${vx} , vy: ${vy}`;
+        }
+        drawFrame();
+      };
+
+      // Math 造 MyToFixed
+      //   function MyToFixed(num, float) {
+      //     let pow = Math.pow(10, float);
+      //     return Math.round(num * pow) / pow;
+      //   }
+    </script>
+  </body>
+</html>
+<style></style>

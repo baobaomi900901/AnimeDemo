@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-5-随机多条平滑曲线</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas
+      id="canvas"
+      width="400"
+      height="400"
+      class="bg-white ml-10"
+    ></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let points = [];
+        let numPoints = 11;
+        let ctrlPoints = {};
+
+        for (let i = 0; i < numPoints; i++) {
+          points.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+          });
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        // 区别于3-4-随机多条曲线, 可能会出现直角的情况
+        for (let i = 1; i < numPoints - 2; i++) {
+          ctrlPoints.x = (points[i].x + points[i + 1].x) / 2;
+          ctrlPoints.y = (points[i].y + points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(
+            points[i].x,
+            points[i].y,
+            ctrlPoints.x,
+            ctrlPoints.y
+          );
+        }
+        ctx.stroke();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

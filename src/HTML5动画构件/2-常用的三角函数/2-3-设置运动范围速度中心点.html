@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-3-设置运动范围速度中心点</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let angle = 0;
+        let centerX = 200; // 初始 x 轴
+        let centerY = 200; // 初始 y 轴
+        let range = 50; // 运动范围
+        let speed = 0.05; // 运动速度
+
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // x,y 初始轴 + 运动范围
+          ball.x = centerX + Math.sin(angle) * range;
+          // ball.y = centerY + Math.sin(angle) * range;
+
+          // 通过控制speed来控制 Math.sin(angle) 正负频率
+          angle += speed;
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>

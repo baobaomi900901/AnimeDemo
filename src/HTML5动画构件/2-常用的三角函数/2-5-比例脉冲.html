@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-5-比例脉冲</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let angle = 0;
+        let centerScale = 1;
+        let range = 0.5; // -+0.5 倍
+        let speed = 0.05; // 运动速度
+
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 控制缩放大小
+          ball.scaleX = ball.scaleY = centerScale + Math.sin(angle) * range;
+
+          // 通过控制speed来控制 Math.sin(angle) 正负频率
+          angle += speed;
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>

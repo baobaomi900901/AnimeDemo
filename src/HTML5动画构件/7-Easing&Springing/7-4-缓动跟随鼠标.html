@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-4-缓动跟随鼠标</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let mouse = new Utils().captureMouse(canvas);
+        let easing = 0.05;
+
+        ball.x = mouse.x = canvas.width / 2;
+        ball.y = mouse.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 目标位置与当前位置的差值(越来越小) --> 加速度
+          let vx = (mouse.x - ball.x) * easing;
+          let vy = (mouse.y - ball.y) * easing;
+
+          ball.x += vx;
+          ball.y += vy;
+
+          if (mouse.x < canvas.width / 2 && ball.scaleX < 1.2) {
+            ball.scaleX += 0.02;
+            ball.scaleY += 0.02;
+          } else if (mouse.x > canvas.width / 2 && ball.scaleX > 0.8) {
+            ball.scaleX -= 0.02;
+            ball.scaleY -= 0.02;
+          }
+
+          ball.draw();
+        }
+
+        canvas.addEventListener("mouseout", function () {
+          mouse.x = canvas.width / 2;
+          mouse.y = canvas.height / 2;
+        });
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

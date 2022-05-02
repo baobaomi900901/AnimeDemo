@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-9-椭圆运动</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let angle = 0;
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let radius = 100; // 圆半径
+        let radiusX = 150; // 椭圆 x半径
+        let radiusY = 25; // 椭圆 y半径
+        let speed = 0.05;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          ball.x = centerX + Math.cos(angle) * radiusX;
+          ball.y = centerY + Math.sin(angle) * radiusY;
+          angle += speed;
+
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>

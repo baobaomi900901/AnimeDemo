@@ -140,7 +140,7 @@ function drawImage() {
                         xtt = 1;
                         xt = !xt;
                     }
-                    let alpha = xt && yt ? 1 : 0;
+                    let alpha = xt && yt ? 1 : 0.0;
                     // console.log('xt, yt :>> ', xt, yt);
                     let color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
                     particleArray.push(new Particle(positionX, positionY, color, 2));

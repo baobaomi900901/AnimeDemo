@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>4-10-角度加速度跟随鼠标</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Arrow from "../hooks/arrow.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let arrow = new Arrow(ctx);
+        let mouse = new Utils(canvas).captureMouse();
+
+        let vx = 0;
+        let vy = 0;
+        let force = 0.05;
+
+        // 角度
+        let angle = (45 * Math.PI) / 180;
+        arrow.rotate = angle;
+
+        arrow.x = canvas.width / 2;
+        arrow.y = canvas.height / 2;
+
+        mouse.x = canvas.width / 2;
+        mouse.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          let dx = mouse.x - arrow.x;
+          let dy = mouse.y - arrow.y;
+          angle = Math.atan2(dy, dx);
+          let ax = Math.cos(angle) * force;
+          let ay = Math.sin(angle) * force;
+
+          arrow.rotate = angle;
+          vx += ax;
+          vy += ay;
+          arrow.x += vx;
+          arrow.y += vy;
+          arrow.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

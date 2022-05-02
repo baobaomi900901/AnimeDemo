@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-9-渲染图片</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let img = new Image();
+        img.src = "../assets/logo.png";
+        // 等待加载
+        img.onload = () => {
+          // 渲染图片, 坐标, 宽高(默认为图片宽高)
+          ctx.drawImage(img, 0, 0);
+          // 可多次渲染
+          ctx.drawImage(img, 100, 100);
+        };
+      };
+    </script>
+  </body>
+</html>
+<style></style>

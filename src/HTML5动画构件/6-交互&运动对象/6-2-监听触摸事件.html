@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>6-2-监听触摸事件</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white m-10"></canvas>
+    <div class="ml-10">
+      <p id="velocity">----</p>
+    </div>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let velocity = document.getElementById("velocity");
+        let ball = new Ball(ctx);
+        let utils = new Utils(canvas);
+        let touch = utils.captureTouch();
+
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        ball.draw();
+
+        canvas.addEventListener("touchstart", function (e) {
+          e.preventDefault(); // 阻止canvas
+          if (utils.containsPoint(ball.getBounds(), touch.x, touch.y)) {
+            velocity.innerText = "in ball: touch start";
+          } else {
+            velocity.innerText = "canvas: touch start";
+          }
+        });
+
+        canvas.addEventListener("touchend", function (e) {
+          e.preventDefault(); // 阻止canvas
+          if (utils.containsPoint(ball.getBounds(), touch.x, touch.y)) {
+            velocity.innerText = "in ball: touch end";
+          } else {
+            velocity.innerText = "canvas: touch end";
+          }
+        });
+
+        canvas.addEventListener("touchmove", function (e) {
+          e.preventDefault(); // 阻止canvas
+          if (utils.containsPoint(ball.getBounds(), touch.x, touch.y)) {
+            velocity.innerText = "in ball: touch move";
+          } else {
+            velocity.innerText = "canvas: touch move";
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" myContent="IE=edge" />
+    <meta name="viewport" myContent="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>液态卡片</title>
+  </head>
+  <body
+    class="bg-purple-100 w-screen h-screen flex flex-col justify-center items-center"
+  >
+    <div
+      class="container bg-gray-100 flex flex-col justify-center items-center relative shadow-2xl rounded-3xl"
+    >
+      <div class="myTitle absolute z-50">
+        <h1>Un sillon</h1>
+        <p>🔊: see-yohn</p>
+      </div>
+
+      <div class="myContent absolute z-50">
+        <h1>An armchair</h1>
+        <p>
+          Mi papa compro un sillon y <br />
+          una mesa de centro para
+          <br />
+          la sala.
+        </p>
+      </div>
+
+      <button
+        id="btn"
+        class="bg-white w-14 h-14 mt-4 rounded-md text-white absolute z-50 shadow-2xl shadow-slate-700 flex justify-center items-center"
+      >
+        <img src="./up-arrow.svg" alt="" class="btnIcon" />
+      </button>
+
+      <div class="rectBox relative">
+        <div class="rect rect1 bg-indigo-800 w-80 h-64 rounded-3xl flex">
+          <div class="smArc smArc1"></div>
+          <div class="smArc smArc2"></div>
+          <div class="smArc smArc3"></div>
+        </div>
+        <div class="rect rect2 bg-indigo-800 w-80 h-40 rounded-3xl flex">
+          <div class="smArc smArc1f"></div>
+          <div class="smArc smArc2f"></div>
+          <div class="smArc smArc3f"></div>
+        </div>
+      </div>
+      <svg>
+        <filter id="gooey">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+          <feColorMatrix
+            values="
+            0 0 0 0 0
+            0 0 0 0 0
+            1 1 1 0 0
+            1 -10 0.5 10 -5
+            "
+          />
+        </filter>
+      </svg>
+    </div>
+    <script src="./main.js" type="module"></script>
+  </body>
+</html>
+
+<style>
+  .container {
+    width: 350px;
+    height: 668px;
+  }
+  .rectBox {
+    /* 使用滤镜, 粘连效果 */
+    filter: url(#gooey);
+  }
+  .smArc {
+    width: 100px;
+    height: 60px;
+    border-radius: 50%;
+    background: #36319d;
+    /* background: #000; */
+  }
+
+  .smArc2,
+  .smArc2f,
+  .smArc3,
+  .smArc3f {
+    width: 40px;
+    height: 40px;
+  }
+
+  .myTitle {
+    top: 170px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .myTitle > h1 {
+    font-size: 3rem;
+    color: white;
+    font-weight: 700;
+  }
+  .myTitle > p {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 300;
+  }
+  #btn {
+    top: 280px;
+  }
+
+  .myContent {
+    top: 325px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .myContent > h1 {
+    font-size: 1rem;
+    color: white;
+    font-weight: 700;
+  }
+  .myContent > p {
+    font-size: 0.75rem;
+    color: white;
+    font-weight: 300;
+    text-align: center;
+  }
+</style>

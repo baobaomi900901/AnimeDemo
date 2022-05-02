@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>6-4-拖拽落体反弹</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+
+        let utils = new Utils(canvas);
+        let mouse = utils.captureMouse();
+
+        let gravity = 0.1; // 重力加速度时使用
+        let bounce = -0.8; // 反弹
+        let friction = 0.9; // 摩擦力 不能超过1, 数值越小, 摩擦力越大
+
+        // velocity: 初速度
+        let vx = Math.random() * 10 - 5;
+        let vy = Math.random() * 10 - 5;
+
+        let left = 0;
+        let right = canvas.width;
+        let top = 0;
+        let bottom = canvas.height;
+
+        // 是否点击
+        let isMouseDown = false;
+
+        // 初始化角度
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        //
+        canvas.addEventListener(
+          "mousedown",
+          function (e) {
+            if (utils.containsPoint(ball.getBounds(), mouse.x, mouse.y)) {
+              isMouseDown = true;
+              canvas.addEventListener("mouseup", onMouseUp);
+              canvas.addEventListener("mousemove", onMouseMove);
+            }
+          },
+          true
+        );
+
+        function onMouseUp(e) {
+          //   console.log("onMouseUp", mouse.x, mouse.y);
+          isMouseDown = false;
+          canvas.removeEventListener("mouseup", onMouseUp);
+          canvas.removeEventListener("mousemove", onMouseMove);
+        }
+
+        function onMouseMove(e) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+          //   console.log("onMouseMove", mouse.x, mouse.y);
+        }
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (!isMouseDown) {
+            // 位移控制
+            vy += gravity;
+            ball.x += vx;
+            ball.y += vy;
+
+            // 边界碰撞反弹, 超过边界时候取负数, 即可反方向
+            if (ball.x + ball.radius > right) {
+              ball.x = right - ball.radius;
+              vx *= bounce;
+            } else if (ball.x - ball.radius < left) {
+              ball.x = left + ball.radius;
+              vx *= bounce;
+            }
+            if (ball.y + ball.radius > bottom) {
+              ball.y = bottom - ball.radius;
+              vy *= bounce;
+              vx *= friction; // 贴地时增加摩擦力
+            } else if (ball.y - ball.radius < top) {
+              ball.y = top + ball.radius;
+              vy *= bounce;
+            }
+            console.log(isMouseDown, vx);
+          }
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

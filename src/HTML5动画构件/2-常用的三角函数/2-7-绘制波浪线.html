@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>2-7-绘制波浪线</title>
+  </head>
+  <body class="bg-gray-500">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let angleX = 0;
+        let angleY = 0;
+        let range = 50; // 运动范围
+        let speedX = 0.07; // x 速率
+        let speedY = 0.11; // y 速率
+
+        let speedX2 = 0.2;
+        let speedY2 = 0.02;
+
+        // 波浪线
+        let centerY = canvas.height / 2;
+        let posX = 0;
+        let posY = centerY;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 圆形粒子
+          //   ctx.beginPath();
+          //   arcY = canvas.height / 2 + Math.sin(angleY) * range;
+          //   ctx.arc(arcX, arcY, 1, 0, Math.PI * 2, true);
+          //   ctx.fillStyle = "red";
+          //   ctx.closePath();
+          //   ctx.fill();
+          //   angleY += speedY;
+          //   arcX += 1;
+
+          ctx.beginPath();
+          ctx.moveTo(posX, posY);
+          posX += speedX2;
+          angleY += speedY2;
+          posY = centerY + Math.sin(angleY) * range;
+          ctx.lineTo(posX, posY);
+          ctx.stroke();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>

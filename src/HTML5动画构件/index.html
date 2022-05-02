@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="menu">
+      <div class="logo">logo</div>
+
+      <div class="menu-box">
+        <div class="menu-item">123</div>
+        <div class="menu-item">223</div>
+        <div class="menu-item">333</div>
+      </div>
+    </div>
+  </body>
+</html>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu {
+    background: red;
+
+    width: 100vw;
+    height: 64px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    margin-left: 20px;
+  }
+
+  .menu-box {
+    display: flex;
+    margin-right: 20px;
+  }
+
+  .menu-item + .menu-item {
+    margin-left: 20px;
+  }
+</style>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>5-2-粒子喷射</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let balls = [];
+        let numBalls = 10;
+        let gravity = 0.5; // 重力
+
+        // 添加球
+        for (var ball, i = 0; i < numBalls; i++) {
+          ball = new Ball(ctx, 4, Math.random() * 0xffffff);
+
+          // 触发球体喷射判断
+          ball.x = canvas.width / 2;
+          ball.y = canvas.height;
+          // 随机轴偏移量
+          ball.vx = Math.random() * 2 - 1;
+          ball.vy = Math.random() * -10 - 10; // 初始 y 轴偏移量为 负数
+          balls.push(ball);
+
+          // console.log(ball.vy);
+        }
+        let bbm = 0;
+        // 实现逻辑, 判断球体是否超出边界, 如果超出, 则按照 id 在球体数组中 删除该球体
+        function draw(ball, pos) {
+          // 轴偏移量换算成像素偏移量 - 速度
+          // 抛物线逻辑:
+          //    1. 初始一个 Y 轴偏移为负数, 此时方向向上;
+          //    2. 同时, vy 一直在追加重力, 此时越往上速度越慢, 当 vy 到达 非负数时, 到达顶点;
+          //    3. 到达顶点后, vy 变为正数, 此时方向向下;
+          //    4. 触发边界后, 重新赋值参数
+          ball.vy += gravity;
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+
+          // 判断球体是否超出边界
+          // 球体 y 位置 - 球体半径 > canvas 高度
+          if (
+            ball.x - ball.radius > canvas.width ||
+            ball.y - ball.radius > canvas.height
+          ) {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height;
+            ball.vx = Math.random() * 2 - 1;
+            ball.vy = Math.random() * -10 - 10; // 喷射方向向上
+          }
+          ball.draw();
+        }
+
+        function drawFrame() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          window.requestAnimationFrame(drawFrame);
+
+          balls.forEach(draw);
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

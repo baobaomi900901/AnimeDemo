@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-12-颜色灰度</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        // 绘制列图形
+        for (var i = 0; i < canvas.width; i += 10) {
+          for (var j = 0; j < canvas.height; j += 10) {
+            ctx.fillStyle =
+              i % 20 === 0 ? "red" : i % 30 === 0 ? "gold" : "blue";
+            ctx.fillRect(i, j, 10, 10);
+          }
+        }
+
+        // 获取图像数据
+        let imagedata = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // 提取像素数据
+        let pixels = imagedata.data;
+        console.log(pixels);
+
+        for (
+          var offset = 0, len = pixels.length;
+          offset < len / 2;
+          offset += 4
+        ) {
+          // 修改像素 RGBA 值, 255 - 原值 = 反转值
+          let r = pixels[offset];
+          let g = pixels[offset + 1];
+          let b = pixels[offset + 2];
+
+          //相对亮度，人眼更能感知绿色
+          let a = (0.2125 * r + 0.7154 * g + 0.0721 * b) | 0;
+
+          pixels[offset] = pixels[offset + 1] = pixels[offset + 2] = a;
+        }
+
+        console.log(pixels);
+
+        // 更新图像数据
+        ctx.putImageData(imagedata, 0, 0);
+      };
+    </script>
+  </body>
+</html>
+<style></style>

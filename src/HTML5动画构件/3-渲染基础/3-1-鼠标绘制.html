@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-1-绘制</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        let mouse = {
+          x: 0,
+          y: 0,
+        };
+        // 获取鼠标坐标
+        canvas.addEventListener("mousemove", function (e) {
+          mouse.x = e.offsetX;
+          mouse.y = e.offsetY;
+        });
+
+        // 鼠标按下时, 开启路劲绘制起点
+        canvas.addEventListener("mousedown", function () {
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y); // 起点
+
+          // 鼠标移动时, 调用绘制函数
+          canvas.addEventListener("mousemove", onPaint);
+        });
+
+        // 鼠标松开时, 移除 鼠标移动的监听事件
+        canvas.addEventListener("mouseup", function () {
+          // 移除鼠标移动监听事件
+          canvas.removeEventListener("mousemove", onPaint);
+          ctx.stroke();
+        });
+
+        // 绘制函数
+        function onPaint() {
+          ctx.lineTo(mouse.x, mouse.y); // 按点位绘画
+          ctx.stroke(); // 描边着色
+        }
+      };
+    </script>
+  </body>
+</html>
+<style></style>

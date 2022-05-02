@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>8-1-边框测试</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <div>
+      <p id="log">123</p>
+    </div>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let log = document.getElementById("log");
+        let ctx = canvas.getContext("2d");
+        let utils = new Utils(ctx);
+        let mouse = utils.captureMouse(canvas);
+        let ball0 = new Ball(ctx);
+        let ball1 = new Ball(ctx, undefined, "blue");
+
+        // 目标位置
+        ball0.x = canvas.width / 2;
+        ball0.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          ball1.x = mouse.x;
+          ball1.y = mouse.y;
+
+          if (utils.intersects(ball0.getBounds(), ball1.getBounds())) {
+            log.innerText = "碰撞";
+          } else {
+            log.innerText = "未碰撞";
+          }
+
+          let bounds0 = ball0.getBounds();
+          let bounds1 = ball1.getBounds();
+
+          ball0.draw();
+          ball1.draw();
+
+          ctx.beginPath();
+          ctx.strokeRect(bounds0.x, bounds0.y, bounds0.width, bounds0.height);
+          ctx.beginPath();
+          ctx.strokeRect(bounds1.x, bounds1.y, bounds1.width, bounds1.height);
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

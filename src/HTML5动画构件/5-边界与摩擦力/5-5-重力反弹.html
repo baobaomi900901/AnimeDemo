@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>5-5-重力反弹</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let gravity = 0.1;
+        let bounce = -0.8; // 反弹
+
+        // velocity: 初速度
+        let vx = Math.random() * 10 - 5;
+        let vy = Math.random() * 10 - 5;
+
+        let left = 0;
+        let right = canvas.width;
+        let top = 0;
+        let bottom = canvas.height;
+
+        // 初始化角度
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          vy += gravity;
+          ball.x += vx;
+          ball.y += vy;
+
+          // 边界碰撞反弹, 超过边界时候取负数, 即可反方向
+          if (ball.x + ball.radius > right) {
+            ball.x = right - ball.radius;
+            vx *= bounce * 0.5;
+            console.log(vx);
+          } else if (ball.x - ball.radius < left) {
+            ball.x = left + ball.radius;
+            vx *= bounce * 0.5;
+            console.log(vx);
+          }
+          if (ball.y + ball.radius > bottom) {
+            ball.y = bottom - ball.radius;
+            vy *= bounce;
+
+            // if (vx < 0.2 && vx > -0.2) {
+            vx -= 0.01;
+            //   console.log(vx);
+            // }
+          } else if (ball.y - ball.radius < top) {
+            ball.y = top + ball.radius;
+            vy *= bounce;
+          }
+
+          //   if (vx < 0.5 && vx > -0.5) {
+          //     vx -= 0.005;
+          //     console.log("@", vx);
+          //   } else if (vx > 0.2 && vx < -0.2) {
+          //     vx = 0;
+          //     console.log("end");
+          //   }
+
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

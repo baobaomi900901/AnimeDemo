@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-7-线性渐变</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+
+        let pt1 = { x: 0, y: 0 };
+        let pt2 = { x: 100, y: 100 };
+
+        // 创建一个线性渐变
+        let gradient = ctx.createLinearGradient(pt1.x, pt1.y, pt2.x, pt2.y);
+
+        // 添加渐变颜色, 比例, 颜色
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(0.2, "yellow");
+        gradient.addColorStop(0.8, "green");
+        gradient.addColorStop(1, "red");
+
+        // 绘制线性渐变
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, pt2.x, pt2.y);
+      };
+    </script>
+  </body>
+</html>
+<style></style>

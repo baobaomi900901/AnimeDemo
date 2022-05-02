@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>4-9-重力加速度</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <div class="ml-10">
+      <p id="velocity"></p>
+    </div>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let velocity = document.getElementById("velocity");
+        let ball = new Ball(ctx);
+
+        let vy = 0;
+        // 重力
+        let gravity = 0.1;
+
+        // 初始化角度
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (ball.x > canvas.width + ball.radius) {
+            ball.x = -ball.radius;
+          }
+          if (ball.x < -ball.radius) {
+            ball.x = canvas.width + ball.radius;
+          }
+
+          if (ball.y > canvas.height + ball.radius) {
+            ball.y = -ball.radius;
+          }
+          if (ball.y < -ball.radius) {
+            ball.y = canvas.height + ball.radius;
+          }
+
+          vy += gravity;
+          vy = Math.round(vy * 10) / 10;
+
+          ball.y += vy;
+          ball.draw();
+          velocity.innerHTML = `gravity: ${vy}`;
+        }
+        drawFrame();
+      };
+
+      // Math 造 MyToFixed
+      //   function MyToFixed(num, float) {
+      //     let pow = Math.pow(10, float);
+      //     return Math.round(num * pow) / pow;
+      //   }
+    </script>
+  </body>
+</html>
+<style></style>

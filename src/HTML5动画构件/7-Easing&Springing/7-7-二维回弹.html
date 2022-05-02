@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-7-二维回弹</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let easing = 0.05;
+        let spring = 0.03; // 数值越小, 回弹越慢
+        let vx = 0;
+        let vy = 0;
+
+        // 摩擦力
+        let friction = 0.95;
+
+        // 目标位置
+        let targetX = canvas.width / 2;
+        let targetY = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 计算差值
+          let dx = targetX - ball.x;
+          let ax = dx * spring;
+
+          let dy = targetY - ball.y;
+          let ay = dy * spring;
+
+          vx += ax;
+          vx *= friction; // 逐渐衰减
+
+          vy += ay;
+          vy *= friction; // 逐渐衰减
+
+          ball.x += vx;
+          ball.y += vy;
+
+          ball.draw();
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

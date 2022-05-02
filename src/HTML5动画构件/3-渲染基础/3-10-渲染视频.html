@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>3-10-渲染视频</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="640" height="360" class="bg-white"></canvas>
+    <video id="video" width="640" height="360" controls autoplay>
+      <source src="../assets/movieclip.mp4" type="video/mp4" />
+    </video>
+    <script type="module">
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let video = document.getElementById("video");
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.drawImage(video, 0, 0);
+        }
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

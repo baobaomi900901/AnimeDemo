@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-10-灯笼多个</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let mouse = new Utils().captureMouse(canvas);
+        let ball0 = new Ball(ctx);
+        let ball1 = new Ball(ctx);
+        let ball2 = new Ball(ctx);
+
+        let spring = 0.03;
+        let friction = 0.9;
+        let gravity = 2;
+
+        function move(ball, targetX, targetY, g = 0) {
+          ball.vx += (targetX - ball.x) * spring;
+          ball.vy += (targetY - ball.y) * spring;
+
+          ball.vy += gravity + g; // 添加重力
+
+          ball.vx *= friction;
+          ball.vy *= friction;
+
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+        }
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          move(ball0, mouse.x, mouse.y);
+          move(ball1, ball0.x, ball0.y, 1);
+          move(ball2, ball1.x, ball1.y, 1);
+          // 线
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y);
+          ctx.lineTo(ball0.x, ball0.y);
+          ctx.lineTo(ball1.x, ball1.y);
+          ctx.lineTo(ball2.x, ball2.y);
+          ctx.stroke();
+
+          ball0.draw();
+          ball1.draw();
+          ball2.draw();
+        }
+
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>

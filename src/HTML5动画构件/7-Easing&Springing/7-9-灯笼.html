@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../dist/output.css" />
+    <title>7-9-灯笼</title>
+  </head>
+  <body class="bg-gray-500 flex items-end">
+    <canvas id="canvas" width="400" height="400" class="bg-white"></canvas>
+    <script type="module">
+      import Ball from "../hooks/ball.js";
+      import Utils from "../hooks/utils.js";
+      window.onload = function () {
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let ball = new Ball(ctx);
+        let mouse = new Utils().captureMouse(canvas);
+        let easing = 0.03;
+
+        let spring = 0.05;
+        let friction = 0.9;
+        let gravity = 4;
+
+        let vx = 0;
+        let vy = 0;
+
+        ball.x = mouse.x = canvas.width / 2;
+        ball.y = mouse.y = canvas.height / 2;
+
+        function drawFrame() {
+          window.requestAnimationFrame(drawFrame, canvas);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 目标位置与当前位置的差值(越来越小) --> 加速度
+          let dx = mouse.x - ball.x;
+          let dy = mouse.y - ball.y;
+          let ax = dx * spring;
+          let ay = dy * spring;
+
+          vx += ax;
+          vy += ay;
+
+          vy += gravity; // 添加重力
+
+          vx *= friction;
+          vy *= friction;
+
+          ball.x += vx;
+          ball.y += vy;
+
+          // 线
+          ctx.beginPath();
+          ctx.moveTo(ball.x, ball.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+
+          ball.draw();
+        }
+
+        canvas.addEventListener("mouseout", function () {
+          mouse.x = canvas.width / 2;
+          mouse.y = canvas.height / 2;
+        });
+        drawFrame();
+      };
+    </script>
+  </body>
+</html>
+<style></style>
