@@ -7,7 +7,12 @@ const highlight = document.querySelector(".highlight");
 const mostX = 10; // 10 or -10
 const mostY = 10; // 10 or -10
 
+cardWrapper.addEventListener("click", (e) => {
+    console.log(1);
+})
+
 cardWrapper.addEventListener("mousemove", (e) => {
+    console.log(cardWrapper);
     // 初始化
     card.style.transition = "none";
     highlight.style.transition = "none";
@@ -18,6 +23,7 @@ cardWrapper.addEventListener("mousemove", (e) => {
     const { width, height } = cardWrapper.getBoundingClientRect();
     const halfWidth = width / 2;
     const halfHeight = height / 2;
+    console.log(halfWidth, halfHeight);
 
     // 计算角度, 这里的 y 是相反的
     const rotationY = ((x - halfWidth) / halfWidth) * mostX;

@@ -38,6 +38,7 @@ export default class Ball {
         ctx.restore();
     }
 
+    // 返回圆心坐标
     getBounds() {
         return {
             // 圆形, 中心点为原始坐标

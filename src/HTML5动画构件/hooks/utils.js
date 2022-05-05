@@ -83,7 +83,11 @@ export default class Utils {
             y < rect.y ||
             y > rect.y + rect.height);
     };
+
+    // 元素 1 与元素 2
     intersects(rectA, rectB) {
+        // 取反
+        // 全部不满足时, 返回 false
         return !(rectA.x + rectA.width < rectB.x ||
             rectB.x + rectB.width < rectA.x ||
             rectA.y + rectA.height < rectB.y ||

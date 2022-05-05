@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>自定义鼠标动画</title>
+  </head>
+  <body
+    class="w-screen h-screen flex justify-center items-center gap-4 bg-gray-500 text-gray-400"
+  >
+    <span>Facebook</span>
+    <span>Twitter</span>
+    <span>Instagram</span>
+    <span>Github</span>
+    <div id="cursor">
+      <div class="angle angle-t-l"></div>
+      <div class="angle angle-t-r"></div>
+      <div class="angle angle-b-l"></div>
+      <div class="angle angle-b-r"></div>
+      <div class="aperture"></div>
+      <div id="rect">
+        <div class="rect-inner rect-inner-t-l"></div>
+        <div class="rect-inner rect-inner-t-r"></div>
+        <div class="rect-inner rect-inner-b-l"></div>
+        <div class="rect-inner rect-inner-b-r"></div>
+        <div class="round"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var cursor = document.getElementById("cursor");
+    document.addEventListener("mousemove", function (e) {
+      cursor.style.top = e.clientY + "px";
+      cursor.style.left = e.clientX + "px";
+    });
+  </script>
+</html>
+<style>
+  body {
+    /* cursor: none; */
+  }
+  #cursor {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    /* background: #000; */
+
+    border-radius: 50%;
+    pointer-events: none;
+
+    display: grid;
+    grid-template-columns: 20px 20px;
+    grid-template-rows: 20px 20px;
+  }
+
+  .angle {
+    background: rgba(0, 0, 0, 0.05);
+    /* background: red; */
+    width: 4px;
+    height: 4px;
+    transition: 0.2s cubic-bezier(0.17, 0.67, 0.55, 1.43) 0.005s;
+  }
+
+  .angle-t-l {
+    position: relative;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-radius: 50% 0 0 0;
+  }
+  .angle-t-r {
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    justify-self: end;
+    border-radius: 0 50% 0 0;
+  }
+  .angle-b-l {
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #fff;
+    align-self: end;
+    border-radius: 0 0 0 50%;
+  }
+  .angle-b-r {
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    justify-self: end;
+    align-self: end;
+    border-radius: 0 0 50% 0;
+  }
+
+  .aperture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transition: 0.2s cubic-bezier(0.17, 0.67, 0.55, 1.43);
+    box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.01),
+      0 0 4px 0 rgba(255, 255, 255, 0.01), 0 0 1px 0 rgba(255, 255, 255, 0.01);
+  }
+
+  #rect {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 4px 4px;
+    grid-template-rows: 4px 4px;
+  }
+
+  .round {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transition: 0.2s cubic-bezier(0.17, 0.67, 0.55, 1.43);
+    border-radius: 1px;
+  }
+
+  .rect-inner {
+    background: rgba(0, 0, 0, 0.05);
+    width: 4px;
+    height: 4px;
+    transition: 0.2s cubic-bezier(0.17, 0.67, 0.55, 1.43);
+    border-radius: 1px;
+  }
+
+  .rect-inner-t-l {
+    position: relative;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-radius: 50% 0 0 0;
+  }
+  .rect-inner-t-r {
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    justify-self: end;
+    border-radius: 0 50% 0 0;
+  }
+  .rect-inner-b-l {
+    border-bottom: 1px solid #fff;
+    border-left: 1px solid #fff;
+    align-self: end;
+    border-radius: 0 0 0 50%;
+  }
+  .rect-inner-b-r {
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    justify-self: end;
+    align-self: end;
+    border-radius: 0 0 50% 0;
+  }
+
+  span:hover ~ #cursor {
+    /* border: 2px solid blue; */
+    /* background: blue; */
+  }
+
+  span:hover {
+    color: red;
+  }
+
+  span:hover ~ #cursor > .aperture {
+    width: 16px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.3),
+      0 0 4px 0 rgba(255, 255, 255, 0.3), 0 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  span:hover ~ #cursor > .angle-t-l {
+    transform: translateX(11px) translateY(11px);
+  }
+
+  span:hover ~ #cursor > .angle-t-r {
+    transform: translateX(-11px) translateY(11px);
+  }
+
+  span:hover ~ #cursor > .angle-b-l {
+    transform: translateX(11px) translateY(-11px);
+  }
+
+  span:hover ~ #cursor > .angle-b-r {
+    transform: translateX(-11px) translateY(-11px);
+  }
+
+  span:hover ~ #cursor > #rect > .rect-inner-t-l {
+    transform: translateX(-10px) translateY(-10px);
+  }
+
+  span:hover ~ #cursor > #rect > .rect-inner-t-r {
+    transform: translateX(10px) translateY(-10px);
+  }
+
+  span:hover ~ #cursor > #rect > .rect-inner-b-l {
+    transform: translateX(-10px) translateY(10px);
+  }
+
+  span:hover ~ #cursor > #rect > .rect-inner-b-r {
+    transform: translateX(10px) translateY(10px);
+  }
+
+  span:hover ~ #cursor > #rect > .round {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0);
+    /* box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.3),
+      0 0 4px 0 rgba(255, 255, 255, 0.3), 0 0 1px 0 rgba(255, 255, 255, 0.5); */
+  }
+</style>
