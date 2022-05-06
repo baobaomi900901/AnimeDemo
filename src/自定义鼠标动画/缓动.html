@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/output.css" />
+    <title>缓动</title>
+  </head>
+  <body
+    class="w-screen h-screen flex justify-center items-center gap-4 bg-gray-500 text-gray-400"
+  >
+    <div id="cursor"></div>
+    <div id="rect"></div>
+  </body>
+  <script>
+    var cursor = document.getElementById("cursor");
+    var rect = document.getElementById("rect");
+    document.addEventListener("mousemove", function (e) {
+      // 剔除字符串中的非数字
+      let x = cursor.style.left.toString().replace(/\D/g, "");
+      console.log(x, cursor.style.left);
+      //   console.log(cursor.style.left, e.clientX);
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+
+      //   rect.style.left = e.clientX + "px";
+      //   rect.style.top = e.clientY + "px";
+
+      let demo = setTimeout(() => {
+        rect.style.left = e.clientX + "px";
+        rect.style.top = e.clientY + "px";
+
+        clearTimeout(demo);
+      }, 12);
+    });
+  </script>
+</html>
+<style>
+  #cursor {
+    width: 40px;
+    height: 40px;
+    background: #000;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  #rect {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+</style>

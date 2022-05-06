@@ -20,29 +20,48 @@
       <div class="angle angle-b-l"></div>
       <div class="angle angle-b-r"></div>
       <div class="aperture"></div>
-      <div id="rect">
-        <div class="rect-inner rect-inner-t-l"></div>
-        <div class="rect-inner rect-inner-t-r"></div>
-        <div class="rect-inner rect-inner-b-l"></div>
-        <div class="rect-inner rect-inner-b-r"></div>
-        <div class="round"></div>
-      </div>
+    </div>
+
+    <div id="rect">
+      <div class="rect-inner rect-inner-t-l"></div>
+      <div class="rect-inner rect-inner-t-r"></div>
+      <div class="rect-inner rect-inner-b-l"></div>
+      <div class="rect-inner rect-inner-b-r"></div>
+      <div class="round"></div>
     </div>
   </body>
   <script>
-    var cursor = document.getElementById("cursor");
+    let cursor = document.getElementById("cursor");
+    let rect = document.getElementById("rect");
+
     document.addEventListener("mousemove", function (e) {
-      cursor.style.top = e.clientY + "px";
-      cursor.style.left = e.clientX + "px";
+      cursor.style.opacity = 1;
+      rect.style.opacity = 1;
+      // cursor.style.top = e.clientY + "px";
+      // cursor.style.left = e.clientX + "px";
+      rect.style.top = e.clientY + "px";
+      rect.style.left = e.clientX + "px";
+
+      let stout = setTimeout(() => {
+        cursor.style.top = e.clientY + "px";
+        cursor.style.left = e.clientX + "px";
+        clearTimeout(stout);
+      }, 16);
+    });
+
+    document.addEventListener("mouseout", function (e) {
+      cursor.style.opacity = 0;
+      rect.style.opacity = 0;
     });
   </script>
 </html>
 <style>
   body {
-    /* cursor: none; */
+    cursor: none;
   }
   #cursor {
     position: absolute;
+    top: -50%;
     transform: translate(-50%, -50%);
     /* background: #000; */
 
@@ -52,6 +71,8 @@
     display: grid;
     grid-template-columns: 20px 20px;
     grid-template-rows: 20px 20px;
+
+    opacity: 0;
   }
 
   .angle {
@@ -112,6 +133,9 @@
     display: grid;
     grid-template-columns: 4px 4px;
     grid-template-rows: 4px 4px;
+    pointer-events: none;
+
+    opacity: 0;
   }
 
   .round {
@@ -193,23 +217,23 @@
     transform: translateX(-11px) translateY(-11px);
   }
 
-  span:hover ~ #cursor > #rect > .rect-inner-t-l {
+  span:hover ~ #rect > .rect-inner-t-l {
     transform: translateX(-10px) translateY(-10px);
   }
 
-  span:hover ~ #cursor > #rect > .rect-inner-t-r {
+  span:hover ~ #rect > .rect-inner-t-r {
     transform: translateX(10px) translateY(-10px);
   }
 
-  span:hover ~ #cursor > #rect > .rect-inner-b-l {
+  span:hover ~ #rect > .rect-inner-b-l {
     transform: translateX(-10px) translateY(10px);
   }
 
-  span:hover ~ #cursor > #rect > .rect-inner-b-r {
+  span:hover ~ #rect > .rect-inner-b-r {
     transform: translateX(10px) translateY(10px);
   }
 
-  span:hover ~ #cursor > #rect > .round {
+  span:hover ~ #rect > .round {
     width: 22px;
     height: 22px;
     border-radius: 50%;
